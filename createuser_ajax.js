@@ -1,4 +1,4 @@
-function loginAjax(event){
+function createuserAjax(event){
 	var username = document.getElementById("username").value; // Get the username from the form
 	var password = document.getElementById("password").value; // Get the password from the form
  
@@ -12,6 +12,8 @@ function loginAjax(event){
 		var jsonData = JSON.parse(event.target.responseText); // parse the JSON into a JavaScript object
 		if(jsonData.success){  // in PHP, this was the "success" key in the associative array; in JavaScript, it's the .success property of jsonData
 			alert("You created a new user!");
+			document.getElementById("username").value="";
+			document.getElementById("password").value="";
 		}else{
 			alert("You failed to create a new user.  "+jsonData.message);
 		}
@@ -19,4 +21,4 @@ function loginAjax(event){
 	xmlHttp.send(dataString); // Send the data
 }
  
-document.getElementById("submitCreateUser").addEventListener("click", loginAjax, false); // Bind the AJAX call to button click
+document.getElementById("submitCreateUser").addEventListener("click", createuserAjax, false); // Bind the AJAX call to button click
