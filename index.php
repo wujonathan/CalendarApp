@@ -158,19 +158,19 @@ $("#prev").click( backMonth);
 
 
 $("#login").click( function(){
- $(".userLoginDetails").show();
+ $(".userLoginDetails:hidden").show();
 });
 $("#createUser").click( function(){
- $(".userCreateDetails").show();
+ $(".userCreateDetails:hidden").show();
 });
 $("#createUser").click( function(){
- $(".userCreateDetails").show();
+ $(".userCreateDetails:hidden").show();
 });
 $("#shareCalendar").click( function(){
- $(".shareDetails").show();
+ $(".shareDetails:hidden").show();
 });
 $("#createEvent").click( function(){
- $(".eventCreateDetails").show();
+ $(".eventCreateDetails:hidden").show();
 });
 $("#submitCreateUser").click( function(){
  var newusrname = $("#newUsername").val();
