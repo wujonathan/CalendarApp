@@ -6,6 +6,13 @@ $password = $_POST['password'];
 
 require 'database.php';
 $stmt = $mysqli->prepare("SELECT COUNT(*), id, password FROM registered_users WHERE username=?");
+if (!stmt){
+   echo json_encode(array(
+		"success" => false,
+		"message" => $mysli->error	
+		));
+		exit;
+}
 $stmt->bind_param('s', $username);
 $stmt->execute();
 $stmt->bind_result($cnt, $user_id, $pwd_hash);

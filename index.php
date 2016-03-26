@@ -43,7 +43,7 @@
   </div>
   <div class="calendar">
   </div>
-  <div class="addEvent">
+  <div class="addEvents">
       <button class="btns" id="createEvent">Create Event</button>
       <button class="btns" id="shareCalendar">Share My Cal</button>
   </div>
@@ -121,6 +121,7 @@ $("#submitCreateUser").click( function(){
  $(".userLoginDetails").delay(1000).fadeOut(300);
  $(".logins").delay(1000).hide();
  $(".logouts").delay(1000).show();
+ $(".addEvents").delay(1000).show();
  $("#loggedUser").append('<div>Hello '+usrname+'!</div>');
  }
  else{
@@ -137,9 +138,9 @@ $("#submitCreateUser").click( function(){
  var time = $("#eventTime").val();
  var desc = $("#desc").val();
  var group = $("#invitees").val();
- var grouped = 0;
+ var grouped = "no";
  if (group){
- grouped = 1;
+ grouped = "yes";
  }
  console.log(group);
  var pdata = {
@@ -147,8 +148,8 @@ $("#submitCreateUser").click( function(){
  date : date,
  time : time,
  description : desc,
- groups : group;
- grouped : grouped;
+ groups : group,
+ grouped : grouped
  };
  $.ajax({type:'POST', url: 'addevent_ajax.php', data: pdata, dataType: 'json', success: function(response) {
  if(response.success){ 
