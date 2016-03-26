@@ -70,7 +70,7 @@
       <div>
         <form id="newShare">
           <br> Please input the details for sharing your calendar: </br><br></br>
-          Share With: <input type="text"  name="shareWith">  <br>
+          Share With: <input type="text"  name="shareWith" id="shareWith">  <br>
           <button class="btns" id="addMore">Add more</button><br><br></br>
           <input id="submitShare" type="button" name="submit" value="Share"/>
         </form>
@@ -262,6 +262,23 @@ $("#submitNewEvent").click( function(){
  $.ajax({type:'POST', url: 'addevent_ajax.php', data: pdata, dataType: 'json', success: function(response) {
    if(response.success){ 
      $(".eventCreateDetails").append('<div class="successText">Event Created!</div>');
+     $(".eventCreateDetails").delay(1000).fadeOut(300);
+   }
+   else{
+     $(".eventCreateDetails").append('<div class="failText">'+response.message+'</div>');
+   }
+ }
+})
+});
+//<!-- ---------------------- new shared user work -->
+$("#submitShare").click( function(){
+ var shareTo = $("#shareWith").val();
+ var pdata = {
+   shareTo : shareTo,
+ };
+ $.ajax({type:'POST', url: 'sharecal_ajax.php', data: pdata, dataType: 'json', success: function(response) {
+   if(response.success){ 
+     $(".eventCreateDetails").append('<div class="successText">Calendar Shared!</div>');
      $(".eventCreateDetails").delay(1000).fadeOut(300);
    }
    else{
