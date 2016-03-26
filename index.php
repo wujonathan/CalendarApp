@@ -106,7 +106,7 @@ function firstload(){
   }
   str=str.concat("</table>");
   document.getElementById("cal").innerHTML = str;
-  document.getElementById("date").innerHTML = "Today is "+ monthList[curMonth] + " " + curYear;
+  document.getElementById("date").innerHTML = monthList[curMonth] + ", " + curYear;
 }
 function backMonth(){
   var toMonth=globalMonth.mon.prevMonth();
@@ -127,7 +127,7 @@ function backMonth(){
   }
   str=str.concat("</table>");
   document.getElementById("cal").innerHTML = str;
-  document.getElementById("date").innerHTML = "Today is "+ monthList[curMonth]+ " " + curYear;
+  document.getElementById("date").innerHTML = monthList[curMonth]+ ", " + curYear;
 }
 function forwardMonth(){
   var toMonth=globalMonth.mon.nextMonth();
@@ -148,7 +148,7 @@ function forwardMonth(){
   }
   str=str.concat("</table>");
   document.getElementById("cal").innerHTML = str;
-  document.getElementById("date").innerHTML = "Today is "+ monthList[curMonth] + " " + curYear;
+  document.getElementById("date").innerHTML = monthList[curMonth] + ", " + curYear;
 }
 document.addEventListener("DOMContentLoaded", firstload, false);
 $("#next").click( forwardMonth);
