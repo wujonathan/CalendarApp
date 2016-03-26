@@ -43,15 +43,11 @@
 
     </div>
     <div class="calendar">
-      <div>
-        <button class="btns" id="next"> Next Month</button>
+      <div class="nexts">
+        <button class="btns" id="prev">Prev Month</button>
+        <button class="rbtns" id="next">Next Month</button>
       </div>
-      <div class="cal" id="cal">
-
-      </div>
-      <div>
-        <button class="btns" id="prev"> Prev Month</button>
-      </div>
+      <div class="cal" id="cal"></div>
     </div>
     <div class="addEvents">
       <button class="btns" id="createEvent">Create Event</button>
@@ -94,14 +90,20 @@ function firstload(){
   globalMonth.mon=thisMonth;
   var weeksinMonth=thisMonth.getWeeks();
   var str="";
-  str=str.concat("<table align='center' border=1 cellpadding=2> <tr> <th class='cell'>Sun <th>Mon <th>Tue <th>Wed <th>Thu <th>Fri <th>Sat</tr>");
+  str=str.concat("<table align='center' border=1 cellpadding=2> <tr> <th class='cell'>Sun <th class='cell'>Mon <th class='cell'>Tue <th class='cell'>Wed <th class='cell'>Thu <th class='cell'>Fri <th class='cell'>Sat</tr>");
   for(var i=0;i<weeksinMonth.length;i++){
     str=str.concat("<tr>");
     var daysinWeek= weeksinMonth[i].getDates();
     for(var j=0;j<7;j++){
       var theDay= daysinWeek[j].getDate();
-      str=str.concat("<td>".concat(theDay));
-    }
+      var theMonth= daysinWeek[j].getMonth();
+      if (theMonth == curMonth){
+        str=str.concat("<td class='cell'>".concat(theDay));
+      }
+      else{
+         str=str.concat("<td class='oldcell'>".concat(theDay));
+      }
+   }
     str=str.concat("</tr>");
   }
   str=str.concat("</table>");
@@ -115,13 +117,19 @@ function backMonth(){
   globalMonth.mon=toMonth;
   var weeksinMonth=toMonth.getWeeks();
   var str="";
-  str=str.concat("<table align='center' border=1 cellpadding=2> <tr> <th>Sun <th>Mon <th>Tue <th>Wed <th>Thu <th>Fri <th>Sat</tr>");
+  str=str.concat("<table align='center' border=1 cellpadding=2> <tr> <th class='cell'>Sun <th class='cell'>Mon <th class='cell'>Tue <th class='cell'>Wed <th class='cell'>Thu <th class='cell'>Fri <th class='cell'>Sat</tr>");
   for(var i=0;i<weeksinMonth.length;i++){
     str=str.concat("<tr>");
     var daysinWeek= weeksinMonth[i].getDates();
     for(var j=0;j<7;j++){
       var theDay= daysinWeek[j].getDate();
-      str=str.concat("<td>".concat(theDay));
+      var theMonth= daysinWeek[j].getMonth();
+      if (theMonth == curMonth){
+        str=str.concat("<td class='cell'>".concat(theDay));
+      }
+      else{
+         str=str.concat("<td class='oldcell'>".concat(theDay));
+      }
     }
     str=str.concat("</tr>");
   }
@@ -136,13 +144,19 @@ function forwardMonth(){
   globalMonth.mon=toMonth;
   var weeksinMonth=toMonth.getWeeks();
   var str="";
-  str=str.concat("<table align='center' border=1 cellpadding=2> <tr> <th>Sun <th>Mon <th>Tue <th>Wed <th>Thu <th>Fri <th>Sat</tr>");
+  str=str.concat("<table align='center' border=1 cellpadding=2> <tr> <th class='cell'>Sun <th class='cell'>Mon <th class='cell'>Tue <th class='cell'>Wed <th class='cell'>Thu <th class='cell'>Fri <th class='cell'>Sat</tr>");
   for(var i=0;i<weeksinMonth.length;i++){
     str=str.concat("<tr>");
     var daysinWeek= weeksinMonth[i].getDates();
     for(var j=0;j<7;j++){
       var theDay= daysinWeek[j].getDate();
-      str=str.concat("<td>".concat(theDay));
+      var theMonth= daysinWeek[j].getMonth();
+      if (theMonth == curMonth){
+        str=str.concat("<td class='cell'>".concat(theDay));
+      }
+      else{
+         str=str.concat("<td class='oldcell'>".concat(theDay));
+      }
     }
     str=str.concat("</tr>");
   }
@@ -158,19 +172,30 @@ $("#prev").click( backMonth);
 
 
 $("#login").click( function(){
- $(".userLoginDetails:hidden").show();
+ $(".userLoginDetails").show();
+});
+
+$("#logout").click( function(){
+ $.ajax({type:'POST', url: 'logout_ajax.php', dataType: 'json', success: function(response) {
+   if(response.success){
+     $(".logouts").delay(1000).hide();
+     $(".logins").delay(1000).show();
+     $(".addEvents").delay(1000).hide();
+}}
+});
+});
+
+$("#createUser").click( function(){
+ $(".userCreateDetails").show();
 });
 $("#createUser").click( function(){
- $(".userCreateDetails:hidden").show();
-});
-$("#createUser").click( function(){
- $(".userCreateDetails:hidden").show();
+ $(".userCreateDetails").show();
 });
 $("#shareCalendar").click( function(){
- $(".shareDetails:hidden").show();
+ $(".shareDetails").show();
 });
 $("#createEvent").click( function(){
- $(".eventCreateDetails:hidden").show();
+ $(".eventCreateDetails").show();
 });
 $("#submitCreateUser").click( function(){
  var newusrname = $("#newUsername").val();

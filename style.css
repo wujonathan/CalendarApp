@@ -55,6 +55,15 @@ body {
     opacity:0.8;
 }
 
+.rbtns{
+    background: #4486F6;
+    width: 100px;
+    height: 30px;
+    margin: 0 0 10px 540px;
+    border-radius: 6px;
+    opacity: 0.8;
+}
+
 .userCreateDetails {
     width: 360px;
     height: 200px;
@@ -84,13 +93,20 @@ body {
 }
 
 .cell {
-    width : 100px;
-    height : 100px;
+    width : 80px;
+    height : 60px;
+    text-align: center;
+}
+
+.oldcell {
+    width : 80px;
+    height : 60px;
+    text-align: center;
+    background-color: #F4F4F4;
 }
 
 .calendar {
     width: 640px;
-    height: 365px;
     margin: 1em auto;
     background-color: #FFFFFF;
 }
