@@ -36,8 +36,14 @@ body {
     opacity:0.8;
 }
 
-
 .userCreateDetails {
+    width: 360px;
+    height: 200px;
+    background-color: #FFFFFF;
+    display: none;
+}
+
+.shareDetails {
     width: 360px;
     height: 200px;
     background-color: #FFFFFF;
@@ -48,7 +54,7 @@ body {
     width: 360px;
     height: 200px;
     background-color: #FFFFFF;
-    display: none;
+    display: none; #inherit;
 }
 
 .userLoginDetails {
