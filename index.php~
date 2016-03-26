@@ -333,6 +333,7 @@ $("#submitNewEvent").click( function(){
      $("#addEventMsg").append('<div class="failText">One or More Required Field is Missing</div>');
      return;
  }
+
  var pdata = {
    title : title,
    date : date,
@@ -358,38 +359,6 @@ $("#submitNewEvent").click( function(){
  }
 })
 });
-
-
-$("#submitShare").click( function(){
- var shareTo = $("#shareWith").val();
- if (shareTo = ""){
-     $("#shareMsg").empty();
-     $("#shareMsg").append('<div class="failText">One or More Required Field is Missing</div>');
-     return;
- }
- var pdata = {
-   shareTo : shareTo,
- };
- $.ajax({type:'POST', url: 'sharecal_ajax.php', data: pdata, dataType: 
-'json', success: function(response) {
-   if(response.success){
-     $("#shareMsg").empty();
-     $("#shareMsg").append('<div class="successText">Calendar Shared!</div>');
-     setTimeout(function() {
-     $(".shareDetails").fadeOut(300);
-     $("#shareMsg").empty();
-     $("#newShare")[0].reset();
-     },1000); 
-   }
-   else{
-     $("#shareMsg").empty();
-     $("#shareMsg").append('<div class="failText">'+response.message+'</div>');
-   }
- }
-})
-});
-
-
 
 </script>
 </body>
