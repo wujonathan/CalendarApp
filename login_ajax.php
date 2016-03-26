@@ -6,7 +6,7 @@ $password = $_POST['password'];
 
 require 'database.php';
 $stmt = $mysqli->prepare("SELECT COUNT(*), id, password FROM registered_users WHERE username=?");
-if (!stmt){
+if (!$stmt){
    echo json_encode(array(
 		"success" => false,
 		"message" => $mysli->error	
