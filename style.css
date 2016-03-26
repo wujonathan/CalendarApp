@@ -83,6 +83,11 @@ body {
     display: none;
 }
 
+.cell {
+    width : 100px;
+    height : 100px;
+}
+
 .calendar {
     width: 640px;
     height: 365px;

@@ -53,7 +53,7 @@
         <button class="btns" id="prev"> Prev Month</button>
       </div>
     </div>
-    <div class="addEvent">
+    <div class="addEvents">
       <button class="btns" id="createEvent">Create Event</button>
       <button class="btns" id="shareCalendar">Share My Cal</button>
     </div>
@@ -94,7 +94,7 @@ function firstload(){
   globalMonth.mon=thisMonth;
   var weeksinMonth=thisMonth.getWeeks();
   var str="";
-  str=str.concat("<table align='center' border=1 cellpadding=2> <tr> <th>Sun <th>Mon <th>Tue <th>Wed <th>Thu <th>Fri <th>Sat</tr>");
+  str=str.concat("<table align='center' border=1 cellpadding=2> <tr> <th class='cell'>Sun <th>Mon <th>Tue <th>Wed <th>Thu <th>Fri <th>Sat</tr>");
   for(var i=0;i<weeksinMonth.length;i++){
     str=str.concat("<tr>");
     var daysinWeek= weeksinMonth[i].getDates();
@@ -236,7 +236,7 @@ $("#submitNewEvent").click( function(){
  };
  $.ajax({type:'POST', url: 'addevent_ajax.php', data: pdata, dataType: 'json', success: function(response) {
    if(response.success){ 
-     $(".eventCreateDetails").append('<div class="successText">Login Success!!</div>');
+     $(".eventCreateDetails").append('<div class="successText">Event Created!</div>');
      $(".eventCreateDetails").delay(1000).fadeOut(300);
    }
    else{
