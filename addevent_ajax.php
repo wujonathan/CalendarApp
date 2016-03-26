@@ -70,7 +70,6 @@ if(strcmp(grouped,"yes")==0){
 	$stmt->fetch();
 	$stmt->close();
 	$groups = explode(",", $group);
-	echo(sizeof($groups));
 	for($i=0; $i<sizeof($groups) ;$i++){
 		$curU=$groups[$i];				
 		$stmt = $mysqli->prepare("SELECT user_id FROM registered_users WHERE username=?");
