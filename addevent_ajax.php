@@ -11,35 +11,32 @@ if(isset($_SESSION['useragent']) && $previous_ua !== $current_ua){
 	$_SESSION['useragent'] = $current_ua;
 }
 		//Gets the required variables
-$day=$_POST['day'];
-$month=$_POST['month'];
-$year=$_POST['year'];
+$date=$_POST['date'];
 $grouped=$_POST['grouped'];
-$groups=json_decode($_POST['groups']);
+$groups=$_POST['group'];
 $user_id=$_SESSION['user_id'];
 $title=$_POST['title'];
 $description=$_POST['description'];
-$hour=$_POST['hour'];
-$minute=$_POST['minute'];
+$time=$_POST['time'];
 require 'database.php';
 		//Inserts into database
 if(strcmp(grouped,'yes')!=0){
-	$stmt = $mysqli->prepare("INSERT INTO events (day, month, year, grouped, user_id, title, description, hour, minute) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+	$stmt = $mysqli->prepare("INSERT INTO events (date, grouped, user_id, title, description, time) VALUES (?, ?, ?, ?, ?, ?)");
 	if(!$stmt){
 		printf("Query Prep Failed: %s\n", $mysqli->error);
 		exit;
 	}
-	$stmt->bind_param('iiisissii',$day, $month, $year, $grouped, $user_id, $title, $description, $hour, $minute);
+	$stmt->bind_param('sissss',$date, $grouped, $user_id, $title, $description, $time);
 	$stmt->execute();
 	$stmt->close();
 }
 else{
-	$stmt = $mysqli->prepare("INSERT INTO events (day, month, year, grouped, user_id, title, description, hour, minute) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+	$stmt = $mysqli->prepare("INSERT INTO events (date, grouped, user_id, title, description, time) VALUES (?, ?, ?, ?, ?, ?)");
 	if(!$stmt){
 		printf("Query Prep Failed: %s\n", $mysqli->error);
 		exit;
 	}
-	$stmt->bind_param('iiisissii',$day, $month, $year, $grouped, $user_id, $title, $description, $hour, $minute);
+	$stmt->bind_param('sissss',$date, $grouped, $user_id, $title, $description, $time);
 	$stmt->execute();
 	$stmt->close();
 
@@ -48,7 +45,7 @@ else{
 	$stmt->bind_result($event_id);
 	$stmt->fetch();
 	$stmt->close();
-
+	$groups = explode(",", $group);
 	for(int $i=0;$i<sizeof($groups);$i++){
 		$curU=$groups[$i];
 		$stmt = $mysqli->prepare("SELECT user_id FROM registered_users WHERE username=?");

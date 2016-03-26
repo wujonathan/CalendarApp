@@ -1,13 +1,12 @@
 <?php
 header("Content-Type: application/json");
 if(isset($_POST['newUsername'])&&isset($_POST['newPassword'])){
-	require 'database.php';
-
 	/*
 
 	need to add check for "," in the username otherwise parser won't work
-
+	
 	*/
+	require 'database.php';	
 // This function checks if the username matches one in the database
 	function existingUserCheck($u){
 		require 'database.php';

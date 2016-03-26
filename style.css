@@ -4,6 +4,16 @@ body {
     padding: 0;
 }
 
+.successText{
+    color: green;
+    text-align: right;
+}
+
+.failText{
+    color: red;
+    text-align: right;
+}
+
 .layer0 {
     margin: 1em auto;
     background-color: #F4F4F4;
