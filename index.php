@@ -15,7 +15,7 @@
      <button class="btns" id="createUser" data="0">Create User</button>
    </div>
    <div class="logouts">
-    <div id="loggedUser"></div>
+    <div id="loggedUser" data="0"></div>
     <button class="btns" id="logout">Log Out</button>
   </div>
   <div class="userLoginDetails">
@@ -86,33 +86,52 @@
 var globalMonth={};
 var monthList = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
+
 function load(toMonth){
+  $("#cal").empty();
   var curMonth = toMonth.month;
   var curYear = toMonth.year;
   globalMonth.mon=toMonth;
   var weeksinMonth=toMonth.getWeeks();
-  var str="";
-  str=str.concat("<table align='center' border=1 cellpadding=2> <tr> <th class='cell'>Sun <th class='cell'>Mon <th class='cell'>Tue <th class='cell'>Wed <th class='cell'>Thu <th class='cell'>Fri <th class='cell'>Sat</tr>");
-  for(var i=0;i<weeksinMonth.length;i++){
-    str=str.concat("<tr>");
-    var daysinWeek= weeksinMonth[i].getDates();
-    for(var j=0;j<7;j++){
-      var theDay= daysinWeek[j].getDate();
-      var theMonth= daysinWeek[j].getMonth();
-      if (theMonth == curMonth){
-        str=str.concat("<td class='cell'>".concat(theDay));
+  if($("#loggedUser").attr("data") == "0") {
+     var str="";
+     str=str.concat("<table align='center' border=1 cellpadding=2> <tr> <th class='cell'>Sun <th class='cell'>Mon <th class='cell'>Tue <th class='cell'>Wed <th class='cell'>Thu <th class='cell'>Fri <th class='cell'>Sat</tr>");
+     for(var i=0;i<weeksinMonth.length;i++){
+       str=str.concat("<tr>");
+       var daysinWeek= weeksinMonth[i].getDates();
+       for(var j=0;j<7;j++){
+         var theDay= daysinWeek[j].getDate();
+         var theMonth= daysinWeek[j].getMonth();
+         if (theMonth == curMonth){
+            str=str.concat("<td class='cell'>".concat(theDay));
+           }
+         else{
+            str=str.concat("<td class='oldcell'>".concat(theDay));
+         } 
       }
-      else{
-         str=str.concat("<td class='oldcell'>".concat(theDay));
-      }
+      str=str.concat("</tr>");
     }
-    str=str.concat("</tr>");
+    str=str.concat("</table>");
   }
-  str=str.concat("</table>");
+  else{
+     var queryMonth = curYear+"-"+curMonth;
+     var pdata = {
+        queryMonth : queryMonth
+    };
+ $.ajax({type:'POST', url: 'fetchEvents_ajax.php', data: pdata, dataType: 'json', success: function(response) {
+   if(response.success){ 
+       for (i = 0; i < response.length; ++i) 
+	{
+           var resp = response[i];
+           console.log(resp);
+        }
+  }
+  }})
+  }
+
   document.getElementById("cal").innerHTML = str;
   document.getElementById("date").innerHTML = monthList[curMonth] + ", " + curYear;
 }
-
 
 function firstload(){
   var curDate = new Date();
@@ -168,6 +187,8 @@ $("#logout").click( function(){
      $(".logouts").delay(1000).hide();
      $(".logins").delay(1000).show();
      $(".addEvents").delay(1000).hide();
+     $("#loggedUser").empty();
+     $("#loggedUser").attr("data","0");
 }}
 });
 });
@@ -263,6 +284,7 @@ $("#submitLogin").click( function(){
    if(response.success){ 
      $("#loginUserMsg").empty();
      $("#loginUserMsg").append('<div class="successText">Login Success!!</div>');
+     $("#loggedUser").attr("data","1");
      setTimeout(function() {
      $(".userLoginDetails").fadeOut(300);
      $(".logins").hide();
