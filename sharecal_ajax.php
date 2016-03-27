@@ -22,16 +22,19 @@ function alreadyShared($u){
 		if($result==0){return false;}
 		else{return true;}
 	}
-
-$shareToArr = explode(",", $shareTo);
+$shareToArr = explode(", ", $shareTo);
+$array = array();
 for($i=0; $i<sizeof($shareToArr) ;$i++){
-	$curU=$shareToArr[$i];				
+	$curU=$shareToArr[$i];	
 	$stmt = $mysqli->prepare("SELECT id FROM registered_users WHERE username=?");
 	if(!$stmt){
-		echo json_encode(array(
+		$status = array(
 			"success" => false,
-			"message" => $mysqli->error						));
-		exit;
+			"user" => $curU,
+			"message" => $mysqli->error
+						);
+	       array_push($array, $status);
+      	       exit;
 	}
 	$stmt->bind_param('s', $curU);
 	$stmt->execute();
@@ -41,24 +44,32 @@ for($i=0; $i<sizeof($shareToArr) ;$i++){
 	if($user_id!=null && !alreadyShared($user_id)){
 		$stmt = $mysqli->prepare("INSERT INTO shared_users (user_id, sharer_id) VALUES (?, ?)");
 		if(!$stmt){
-			echo json_encode(array(
+			$status = array(
 				"success" => false,
-				"message" => $mysqli->error						));
+				"user" => $curU,
+				"message" => $mysqli->error						);
+ 			array_push($array, $status);
 			exit;
 		}
 		$stmt->bind_param('ii', $user_id, $sharer_id);
 		$stmt->execute();
 		$stmt->close();
-		echo json_encode(array(
-			"success" => true
-			));
-		exit;
+		$status = array(
+			"success" => true,
+			"user" => $curU
+			);
+		array_push($array, $status);
+
+			
 	}
 	else{
-		echo json_encode(array(
+		$status = array(
 			"success" => false,
+			"user" => $curU,
 			"message" => "Failed to Share Calendar"
-			));
+			);
+                array_push($array, $status);
 	}
 }
+echo json_encode($array);
 ?>
