@@ -14,6 +14,20 @@ body {
     text-align: right;
 }
 
+.event{
+    color: green;
+    text-align: right;
+    font-size: small;
+    cursor:pointer;
+}
+
+.invitedEvent{
+    color: #699EF7;
+    text-align: right;
+    font-size: small;
+    cursor:pointer;
+}
+
 .layer0 {
     margin: 1em auto;
     background-color: #F4F4F4;

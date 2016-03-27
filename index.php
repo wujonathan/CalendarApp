@@ -49,7 +49,7 @@
         <button class="btns" id="prev">Prev Month</button>
         <button class="rbtns" id="next">Next Month</button>
       </div>
-      <div class="cal" id="cal"></div>
+      <div class="cal" id="cal" data=""></div>
     </div>
     <div class="addEvents">
       <button class="btns" id="createEvent" data="0">Create Event</button>
@@ -83,37 +83,39 @@
 </div>
 </div>
 <script type="text/javascript">
+var toMonth;
+var usrname;
 var globalMonth={};
 var monthList = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-
-function load(toMonth){
+function load(){
   $("#cal").empty();
   var curMonth = toMonth.month;
   var curYear = toMonth.year;
   globalMonth.mon=toMonth;
   var weeksinMonth=toMonth.getWeeks();
-  if($("#loggedUser").attr("data") == "0") {
-     var str="";
-     str=str.concat("<table align='center' border=1 cellpadding=2> <tr> <th class='cell'>Sun <th class='cell'>Mon <th class='cell'>Tue <th class='cell'>Wed <th class='cell'>Thu <th class='cell'>Fri <th class='cell'>Sat</tr>");
-     for(var i=0;i<weeksinMonth.length;i++){
+  var str="";
+  str=str.concat("<table align='center' border=1 cellpadding=2> <tr> <th class='cell'>Sun <th class='cell'>Mon <th class='cell'>Tue <th class='cell'>Wed <th class='cell'>Thu <th class='cell'>Fri <th class='cell'>Sat</tr>");
+  for(var i=0;i<weeksinMonth.length;i++){
        str=str.concat("<tr>");
        var daysinWeek= weeksinMonth[i].getDates();
        for(var j=0;j<7;j++){
          var theDay= daysinWeek[j].getDate();
          var theMonth= daysinWeek[j].getMonth();
          if (theMonth == curMonth){
-            str=str.concat("<td class='cell'>".concat(theDay));
+            var preDivElem = "<td class='cell' id='";
+            var postDivElem = "'>";       
+            var newDivElem = preDivElem+theDay.toString()+postDivElem;
+            str=str.concat(newDivElem.concat(theDay));
            }
          else{
             str=str.concat("<td class='oldcell'>".concat(theDay));
-         } 
+         }
       }
       str=str.concat("</tr>");
     }
     str=str.concat("</table>");
-  }
-  else{
+  if($("#loggedUser").attr("data") == "1") {
      var pre = "";
      var newCurMonth = parseInt(curMonth)+1;
      if (curMonth < 10){
@@ -123,17 +125,19 @@ function load(toMonth){
      var pdata = {
         queryMonth : queryMonth
     };
- $.ajax({type:'POST', url: 'fetchEvents_ajax.php', data: pdata, dataType: 'json', success: function(response) {
-   if(response.success){ 
+ $.ajax({type:'POST', url: 'fetchEvents_ajax.php', data: pdata, dataType: 'json', success: function(response) { 
        for (i = 0; i < response.length; ++i) 
 	{
            var resp = response[i];
-           console.log(resp);
-        }
-  }
+	   if (usrname == resp.host){
+              $("#"+resp.day).append('<li class="event" time="'+resp.time+'" desc="'+resp.desc+'">'+resp.title+'</li>');
+           }
+           else{
+   	   $("#"+resp.day).append('<li class="invitedEvent" time="'+resp.time+'" host="'+resp.host+'" owner="'+resp.owner+'" desc="'+resp.desc+'">'+resp.title+'</li>');
+           }
+         }
   }})
   }
-
   document.getElementById("cal").innerHTML = str;
   document.getElementById("date").innerHTML = monthList[curMonth] + ", " + curYear;
 }
@@ -143,17 +147,18 @@ function firstload(){
   var curMonth = curDate.getMonth();
   var curYear = curDate.getFullYear();
   var thisMonth= new Month(curYear,curMonth);
-  load(thisMonth);
+  toMonth = thisMonth;
+  $( document ).ready(load);
 }
 
 function backMonth(){
-  var toMonth=globalMonth.mon.prevMonth();
-  load(toMonth);
+  toMonth=globalMonth.mon.prevMonth();
+  $( document ).ready(load);
 }
  
 function forwardMonth(){
-  var toMonth=globalMonth.mon.nextMonth();
-  load(toMonth);
+  toMonth=globalMonth.mon.nextMonth();
+  $( document ).ready(load);
 }
 
 
@@ -169,6 +174,31 @@ function toggleState(item){
    $(item).attr("data", "0");
  }
 }
+
+$(document).on('click', ".event", function(event){
+   var evt = $(this).parent().attr('id');
+   var date = $("#date").text();
+   var time24 = $(this).attr("time").split(":");
+   var hour24 = parseInt(time24[0]);
+   var hour = ((hour24 + 11) % 12) + 1;
+   var amPm = hour24 > 11 ? "pm" : "am";
+   var time = hour.toString() + ":" + time24[1] + amPm;	    
+   var out = " Event Title: " +  $(this).text() + "\n Scheduled for: " + evt.toString() + " " +date +"\n Time: " + time + "\n Description: " + $(this).attr("desc") ;
+   alert(out);
+});
+
+
+$(document).on('click', ".invitedEvent", function(event){
+   var evt = $(this).parent().attr('id');
+   var date = $("#date").text();
+   var time24 = $(this).attr("time").split(":");
+   var hour24 = parseInt(time24[0]);
+   var hour = ((hour24 + 11) % 12) + 1;
+   var amPm = hour24 > 11 ? "pm" : "am";
+   var time = hour.toString() + ":" + time24[1] + amPm;	    
+   var out = " Event share from " + $(this).attr("owner") + "'s calendar.\n Event Title: " +  $(this).text() + "\n Scheduled for: " + evt.toString() + " " +date +"\n Time: " + time + "\n Description: " + $(this).attr("desc")  + "\n Event Host: " +  $(this).attr("host");
+   alert(out);
+});
 
 
 $("#login").click( function(){
@@ -194,6 +224,7 @@ $("#logout").click( function(){
      $(".addEvents").delay(1000).hide();
      $("#loggedUser").empty();
      $("#loggedUser").attr("data","0");
+     firstload();
 }}
 });
 });
@@ -264,6 +295,8 @@ $("#submitCreateUser").click( function(){
          $("#userCreateMsg").empty();
          $("#userCreate")[0].reset();
      },1000);
+     toggleState($("#createUser"));
+     firstload();
    }
    else{
      $("#userCreateMsg").empty();
@@ -274,7 +307,7 @@ $("#submitCreateUser").click( function(){
 });
 
 $("#submitLogin").click( function(){
- var usrname = $("#username").val();
+ usrname = $("#username").val();
  var usrpass = $("#password").val();
  var pdata = {
    username : usrname,
@@ -299,6 +332,8 @@ $("#submitLogin").click( function(){
      $("#userlogin")[0].reset();
      $("#loggedUser").append('<div>Hello '+usrname+'!</div>');
      },1000); 
+     toggleState($("#login"));
+     firstload();
    }
    else{
      $("#loginUserMsg").empty();
@@ -336,6 +371,8 @@ $("#submitNewEvent").click( function(){
      $("#addEventMsg").empty();
      $("#newEvent")[0].reset();
      },1000); 
+     toggleState($("#createEvent"));
+     firstload();
    }
    else{
      $("#addEventMsg").empty();
@@ -363,7 +400,6 @@ $("#submitShare").click( function(){
    for (i = 0; i < response.length; ++i)
     {
      var resp = response[i];
-     console.log(resp);
      if(resp.success){
         $("#shareMsg").append('<div class="successText">Calendar Shared with '+resp.user+'</div>'); 
    }
@@ -378,6 +414,8 @@ $("#submitShare").click( function(){
      $("#shareMsg").empty();
      $("#newShare")[0].reset();
      },1000);
+  toggleState($("#shareCalendar"));
+  firstload();
   }
 }})
 });
