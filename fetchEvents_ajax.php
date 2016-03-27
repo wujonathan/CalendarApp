@@ -24,9 +24,6 @@ while($stmt->fetch()){
 
 $stmt->close();
 $events_array=array();
-echo("this is used");
-echo($userid);
-echo($querryMonth);
 for($i=0;$i<sizeof($users_array);$i++){
 	$stmt = $mysqli->prepare("SELECT title, description, day, time FROM events WHERE userid=? AND month=? ORDER BY day ASC");
 	if(!$stmt){
