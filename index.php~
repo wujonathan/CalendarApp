@@ -114,12 +114,7 @@ function load(toMonth){
     str=str.concat("</table>");
   }
   else{
-     var pre = "";
-     var newCurMonth = parseInt(curMonth)+1;
-     if (curMonth < 10){
-	pre = "0";    
-     }
-     var queryMonth = curYear+"-"+pre+newCurMonth.toString();
+     var queryMonth = curYear+"-"+curMonth;
      var pdata = {
         queryMonth : queryMonth
     };
