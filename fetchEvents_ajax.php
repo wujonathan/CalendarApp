@@ -38,5 +38,6 @@ for($i=0;$i<sizeof($users_array);$i++){
 	}
 	$stmt->close();
 }
+echo json_encode($events_array);
 
 ?>
