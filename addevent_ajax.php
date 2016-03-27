@@ -33,6 +33,8 @@ if(isset($_SESSION['useragent']) && $previous_ua !== $current_ua){
 	$_SESSION['useragent'] = $current_ua;
 }
 $date=$_POST['date'];
+$month=substr($date, 0,7);
+$day=substr($date, 8,10);
 $host="yes";
 $group=$_POST['groups'];
 $user_id=$_SESSION['user_id'];
@@ -41,7 +43,7 @@ $description=$_POST['description'];
 $time=$_POST['time'];
 require 'database.php';
 		//Inserts into database
-$stmt = $mysqli->prepare("INSERT INTO events (date, host, userid, title, description, time) VALUES (?, ?, ?, ?, ?, ?)");
+$stmt = $mysqli->prepare("INSERT INTO events (month, host, userid, title, description, time, day) VALUES (?, ?, ?, ?, ?, ?, ?)");
 if(!$stmt){
 	echo json_encode(array(
 		"success" => false,
@@ -49,7 +51,7 @@ if(!$stmt){
 		));
 	exit;
 }
-$stmt->bind_param('ssisss',$date, $host, $user_id, $title, $description, $time);
+$stmt->bind_param('ssissss',$month, $host, $user_id, $title, $description, $time, $day);
 $stmt->execute();
 $stmt->close();
 
@@ -83,7 +85,7 @@ for($i=0; $i<sizeof($groups) ;$i++){
 	$stmt->close();
 	echo($curUser_id);
 	if($curUser_id!=null){
-		$stmt = $mysqli->prepare("INSERT INTO events (date, host, userid, title, description, time) VALUES (?, ?, ?, ?, ?, ?)");
+		$stmt = $mysqli->prepare("INSERT INTO events (month, host, userid, title, description, time, day) VALUES (?, ?, ?, ?, ?, ?, ?)");
 		if(!$stmt){
 			echo json_encode(array(
 				"success" => false,
@@ -91,7 +93,7 @@ for($i=0; $i<sizeof($groups) ;$i++){
 				));
 			exit;
 		}
-		$stmt->bind_param('ssisss',$date, $host, $curUser_id, $title, $description, $time);
+		$stmt->bind_param('ssissss',$month, $host, $curUser_id, $title, $description, $time, $day);
 		$stmt->execute();
 		$stmt->close();
 	}
