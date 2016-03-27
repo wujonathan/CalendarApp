@@ -60,6 +60,32 @@ body {
     display: none;
 }
 
+.eventDisplay{
+    max-width: 600px;
+    position: relative;
+    left: 15px;
+    margin: 5px
+    float: right;
+    display: none;
+}
+
+.editEvent{
+    max-width: 600px;
+    position: relative;
+    left: 15px;
+    margin: 5px
+    float: right;
+    display: none;
+}
+
+.eventInfoMsg{
+    max-width: 600px;
+    position: relative;
+    left: 15px;
+    margin: 5px
+    float: right;
+}
+
 .btns{
     background: #4486F6;
     width: 100px;

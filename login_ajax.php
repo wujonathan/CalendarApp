@@ -22,7 +22,6 @@ if($cnt == 1 && crypt($password, $pwd_hash)==$pwd_hash){
 	ini_set("session.cookie_httponly", 1);
 	session_start();
 	$_SESSION['username'] = $safe_username;
-	$_SESSION['token'] = substr(md5(rand()), 0, 10);
 	$_SESSION['user_id'] = $user_id;
 	$_SESSION['token'] = substr(md5(rand()), 0, 10);
 	echo json_encode(array(

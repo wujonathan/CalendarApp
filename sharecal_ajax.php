@@ -1,10 +1,8 @@
 <?php
 header("Content-Type: application/json");
 
-session_start();
 require 'database.php';
 require 'user_agent_test.php';
-require 'csrf_detector.php'
 
 $shareTo = $mysqli->real_escape_string($_POST['shareTo']);
 $sharer_id=$mysqli->real_escape_string($_SESSION['user_id']);

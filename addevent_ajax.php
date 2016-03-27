@@ -1,14 +1,13 @@
 <?php
 
 header("Content-Type: application/json");
-session_start();
 require 'database.php';
 require 'user_agent_test.php';
 
 $date=$mysqli->real_escape_string($_POST['date']);
 $month=$mysqli->real_escape_string(substr($date, 0,7));
 $day=$mysqli->real_escape_string(substr($date, 8,10));
-$host="yes";
+$host=$_SESSION['username'];
 $group=$mysqli->real_escape_string($_POST['groups']);
 $user_id=$_SESSION['user_id'];
 $title=$mysqli->real_escape_string($_POST['title']);
@@ -40,7 +39,6 @@ $stmt->bind_result($event_id);
 $stmt->fetch();
 $stmt->close();
 $groups = explode(", ", $group);
-$host="no";
 for($i=0; $i<sizeof($groups) ;$i++){
 	$curU=$groups[$i];				
 	$stmt = $mysqli->prepare("SELECT id FROM registered_users WHERE username=?");
