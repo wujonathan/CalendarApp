@@ -73,11 +73,7 @@
       <div>
         <form id="newShare">
           <br> Please input the details for sharing your calendar: </br><br></br>
-<<<<<<< HEAD
             Share With <input class="text" name="shareWith" id="shareWith" placeholder="username1, username2, ..."><br><br></br>
-=======
-            Share With <input class="text" id="shareWith" placeholder="username1, username2, ..."><br><br></br>
->>>>>>> fcfbd5d975831d26b16a091d3ec2b44bb2c1dfc1
           <input id="submitShare" type="button" name="submit" value="Share"/>
         </form>
         <div id="shareMsg"></div> 
