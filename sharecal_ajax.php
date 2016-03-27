@@ -22,8 +22,9 @@ function alreadyShared($u){
 		if($result==0){return false;}
 		else{return true;}
 	}
-
-$shareToArr = explode(",", $shareTo);
+echo($shareTo);
+$shareToArr = explode(", ", $shareTo);
+echo(sizeof($shareToArr));
 for($i=0; $i<sizeof($shareToArr) ;$i++){
 	$curU=$shareToArr[$i];				
 	$stmt = $mysqli->prepare("SELECT id FROM registered_users WHERE username=?");
@@ -52,7 +53,6 @@ for($i=0; $i<sizeof($shareToArr) ;$i++){
 		echo json_encode(array(
 			"success" => true
 			));
-		exit;
 	}
 	else{
 		echo json_encode(array(
