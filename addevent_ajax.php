@@ -2,46 +2,19 @@
 
 header("Content-Type: application/json");
 session_start();
-$previous_ua = @$_SESSION['useragent'];
-$current_ua = $_SERVER['HTTP_USER_AGENT'];
-function existingUserCheck($u){
-	require 'database.php';
-	$stmt = $mysqli->prepare("SELECT COUNT(*) FROM registered_usersWHERE username = (?) LIMIT 1");
-	if(!$stmt){
-		echo json_encode(array(
-			"success" => false,
-			"message" => $mysqli->error
-			));
-		exit;
-	}
-	$stmt->bind_param('s', $u);
-	$stmt->execute();
-	$stmt->bind_result($result);
-	$stmt->fetch();
-	$stmt->close();
-	if($result==0){return false;}
-	else{return true;}
-}
-
-if(isset($_SESSION['useragent']) && $previous_ua !== $current_ua){
-	echo json_encode(array(
-		"success" => false,
-		"message" => "Session hijack detected"
-		));
-	die("Session hijack detected");
-}else{
-	$_SESSION['useragent'] = $current_ua;
-}
-$date=$_POST['date'];
-$month=substr($date, 0,7);
-$day=substr($date, 8,10);
-$host="yes";
-$group=$_POST['groups'];
-$user_id=$_SESSION['user_id'];
-$title=$_POST['title'];
-$description=$_POST['description'];
-$time=$_POST['time'];
 require 'database.php';
+require 'user_agent_test.php';
+
+$date=$mysqli->real_escape_string($_POST['date']);
+$month=$mysqli->real_escape_string(substr($date, 0,7));
+$day=$mysqli->real_escape_string(substr($date, 8,10));
+$host="yes";
+$group=$mysqli->real_escape_string($_POST['groups']);
+$user_id=$_SESSION['user_id'];
+$title=$mysqli->real_escape_string($_POST['title']);
+$description=$mysqli->real_escape_string($_POST['description']);
+$time=$mysqli->real_escape_string($_POST['time']);
+
 		//Inserts into database
 $stmt = $mysqli->prepare("INSERT INTO events (month, host, userid, title, description, time, day) VALUES (?, ?, ?, ?, ?, ?, ?)");
 if(!$stmt){

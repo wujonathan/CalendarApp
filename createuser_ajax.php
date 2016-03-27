@@ -1,19 +1,18 @@
 <?php
 header("Content-Type: application/json");
-if(isset($_POST['newUsername'])&&isset($_POST['newPassword'])){
-	/*
 
-	need to add check for "," in the username otherwise parser won't work
-	
-	*/
+if(isset($_POST['newUsername'])&&isset($_POST['newPassword'])){
 	require 'database.php';	
 // This function checks if the username matches one in the database
 	function existingUserCheck($u){
 		require 'database.php';
 		$stmt = $mysqli->prepare("SELECT COUNT(*) FROM registered_users WHERE username = (?) LIMIT 1");
 		if(!$stmt){
-			printf("Query Prep Failed: %s\n", $mysqli->error);
-			exit;
+		echo json_encode(array(
+			"success" => false,
+			"message" => $mysqli->error
+			));
+		exit;
 		}
 		$stmt->bind_param('s', $u);
 		$stmt->execute();
@@ -24,8 +23,8 @@ if(isset($_POST['newUsername'])&&isset($_POST['newPassword'])){
 		else{return true;}
 	}
 
-	$newUsername = $_POST['newUsername'];
-	$newPassword = $_POST['newPassword'];
+	$newUsername = $mysqli->real_escape_string($_POST['newUsername']);
+	$newPassword = $mysqli->real_escape_string($_POST['newPassword']);
 	if(!existingUserCheck($newUsername)){
 		$stmt = $mysqli->prepare("INSERT INTO registered_users (username, password) VALUES (?, ?)");
 		if(!$stmt){

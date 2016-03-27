@@ -3,8 +3,10 @@ header("Content-Type: application/json");
 
 session_start();
 require 'database.php';
-$user_id=$_SESSION['user_id'];
-$queryMonth=$_POST["queryMonth"];
+require 'user_agent_test.php';
+
+$user_id=$mysqli->real_escape_string($_SESSION['user_id']);
+$queryMonth=$mysqli->real_escape_string($_POST["queryMonth"]);
 
 $shared_id;
 $users_array=array($user_id);
@@ -37,8 +39,7 @@ for($i=0;$i<sizeof($users_array);$i++){
 	$stmt->bind_result($curTitle, $curDescription, $curDay, $curTime);
 	echo $queryMonth;
 	while($stmt->fetch()){
-		
-		array_push($events_array, array(htmlspecialchars($curTitle), htmlspecialchars($curDescription), htmlspecialchars($curTime), htmlspecialchars($curDay)));
+		array_push($events_array, array(htmlspecialchars($curTitle)), htmlspecialchars($curDescription), htmlspecialchars($curTime), htmlspecialchars($curDay)));
 	}
 	$stmt->close();
 }
