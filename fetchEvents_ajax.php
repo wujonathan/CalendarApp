@@ -15,7 +15,7 @@ if(!$stmt){
 		"message" => $mysqli->error						));
 	exit;
 }
-$stmt->bind_param('s', $shared_id);
+$stmt->bind_param('s', $user_id);
 $stmt->execute();
 $stmt->bind_result($sharer_id);
 while($stmt->fetch()){
@@ -23,8 +23,11 @@ while($stmt->fetch()){
 }
 $stmt->close();
 $events_array=array();
+echo("this is used");
+echo($userid);
+echo($querryMonth);
 for($i=0;$i<sizeof($users_array);$i++){
-	$stmt = $mysqli->prepare("SELECT title, description, day time, FROM events WHERE user_id=? AND month=? ORDER BY day ASC");
+	$stmt = $mysqli->prepare("SELECT title, description, day, time FROM events WHERE userid=? AND month=? ORDER BY day ASC");
 	if(!$stmt){
 		echo json_encode(array(
 			"success" => false,
