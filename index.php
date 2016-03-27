@@ -73,7 +73,7 @@
       <div>
         <form id="newShare">
           <br> Please input the details for sharing your calendar: </br><br></br>
-            Share With <input class="text" id="invitees" placeholder="username1, username2, ..."><br><br></br>
+            Share With <input class="text" name="shareWith" id="shareWith" placeholder="username1, username2, ..."><br><br></br>
           <input id="submitShare" type="button" name="submit" value="Share"/>
         </form>
         <div id="shareMsg"></div> 
@@ -320,14 +320,10 @@ $("#submitLogin").click( function(){
 
 $("#submitNewEvent").click( function(){
  var title = $("#eventTitle").val();
- var date = $("#eventDate").val();
+ var date= $("#eventDate").val()
  var time = $("#eventTime").val();
  var desc = $("#desc").val();
  var group = $("#invitees").val();
- var grouped = "no";
- if (group){
-   grouped = "yes";
- }
  if (title == "" || date == "" || time == ""){
      $("#addEventMsg").empty();
      $("#addEventMsg").append('<div class="failText">One or More Required Field is Missing</div>');
@@ -339,7 +335,6 @@ $("#submitNewEvent").click( function(){
    time : time,
    description : desc,
    groups : group,
-   grouped : grouped
  };
  $.ajax({type:'POST', url: 'addevent_ajax.php', data: pdata, dataType: 'json', success: function(response) {
    if(response.success){ 
@@ -362,7 +357,7 @@ $("#submitNewEvent").click( function(){
 
 $("#submitShare").click( function(){
  var shareTo = $("#shareWith").val();
- if (shareTo = ""){
+ if (shareTo == ""){
      $("#shareMsg").empty();
      $("#shareMsg").append('<div class="failText">One or More Required Field is Missing</div>');
      return;
