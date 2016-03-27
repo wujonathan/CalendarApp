@@ -324,6 +324,10 @@ $("#submitNewEvent").click( function(){
  var time = $("#eventTime").val();
  var desc = $("#desc").val();
  var group = $("#invitees").val();
+ var grouped = "no";
+ if (group){
+   grouped = "yes";
+ }
  if (title == "" || date == "" || time == ""){
      $("#addEventMsg").empty();
      $("#addEventMsg").append('<div class="failText">One or More Required Field is Missing</div>');
@@ -335,6 +339,7 @@ $("#submitNewEvent").click( function(){
    time : time,
    description : desc,
    groups : group,
+   grouped : grouped
  };
  $.ajax({type:'POST', url: 'addevent_ajax.php', data: pdata, dataType: 'json', success: function(response) {
    if(response.success){ 

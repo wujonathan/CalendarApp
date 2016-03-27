@@ -66,7 +66,8 @@ $stmt->execute();
 $stmt->bind_result($event_id);
 $stmt->fetch();
 $stmt->close();
-$groups = explode(", ", $group);
+$groups = explode(",", $group);
+echo(sizeof($groups));
 $host="no";
 for($i=0; $i<sizeof($groups) ;$i++){
 	$curU=$groups[$i];				
@@ -82,6 +83,7 @@ for($i=0; $i<sizeof($groups) ;$i++){
 	$stmt->bind_result($curUser_id);
 	$stmt->fetch();
 	$stmt->close();
+	echo($curUser_id);
 	if($curUser_id!=null){
 		$stmt = $mysqli->prepare("INSERT INTO events (month, host, userid, title, description, time, day) VALUES (?, ?, ?, ?, ?, ?, ?)");
 		if(!$stmt){
