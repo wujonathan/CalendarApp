@@ -85,89 +85,53 @@
 <script type="text/javascript">
 var globalMonth={};
 var monthList = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+function load(toMonth){
+  var curMonth = toMonth.month;
+  var curYear = toMonth.year;
+  globalMonth.mon=toMonth;
+  var weeksinMonth=toMonth.getWeeks();
+  var str="";
+  str=str.concat("<table align='center' border=1 cellpadding=2> <tr> <th class='cell'>Sun <th class='cell'>Mon <th class='cell'>Tue <th class='cell'>Wed <th class='cell'>Thu <th class='cell'>Fri <th class='cell'>Sat</tr>");
+  for(var i=0;i<weeksinMonth.length;i++){
+    str=str.concat("<tr>");
+    var daysinWeek= weeksinMonth[i].getDates();
+    for(var j=0;j<7;j++){
+      var theDay= daysinWeek[j].getDate();
+      var theMonth= daysinWeek[j].getMonth();
+      if (theMonth == curMonth){
+        str=str.concat("<td class='cell'>".concat(theDay));
+      }
+      else{
+         str=str.concat("<td class='oldcell'>".concat(theDay));
+      }
+    }
+    str=str.concat("</tr>");
+  }
+  str=str.concat("</table>");
+  document.getElementById("cal").innerHTML = str;
+  document.getElementById("date").innerHTML = monthList[curMonth] + ", " + curYear;
+}
+
+
 function firstload(){
   var curDate = new Date();
   var curMonth = curDate.getMonth();
   var curYear = curDate.getFullYear();
   var thisMonth= new Month(curYear,curMonth);
-  globalMonth.mon=thisMonth;
-  var weeksinMonth=thisMonth.getWeeks();
-  var str="";
-  str=str.concat("<table align='center' border=1 cellpadding=2> <tr> <th class='cell'>Sun <th class='cell'>Mon <th class='cell'>Tue <th class='cell'>Wed <th class='cell'>Thu <th class='cell'>Fri <th class='cell'>Sat</tr>");
-  for(var i=0;i<weeksinMonth.length;i++){
-    str=str.concat("<tr>");
-    var daysinWeek= weeksinMonth[i].getDates();
-    for(var j=0;j<7;j++){
-      var theDay= daysinWeek[j].getDate();
-      var theMonth= daysinWeek[j].getMonth();
-      if (theMonth == curMonth){
-        str=str.concat("<td class='cell'>".concat(theDay));
-      }
-      else{
-         str=str.concat("<td class='oldcell'>".concat(theDay));
-      }
-   }
-    str=str.concat("</tr>");
-  }
-  str=str.concat("</table>");
-  document.getElementById("cal").innerHTML = str;
-  document.getElementById("date").innerHTML = monthList[curMonth] + ", " + curYear;
-}
-function backMonth(){
-  var toMonth=globalMonth.mon.prevMonth();
-  var curMonth = toMonth.month;
-  var curYear = toMonth.year;
-  globalMonth.mon=toMonth;
-  var weeksinMonth=toMonth.getWeeks();
-  var str="";
-  str=str.concat("<table align='center' border=1 cellpadding=2> <tr> <th class='cell'>Sun <th class='cell'>Mon <th class='cell'>Tue <th class='cell'>Wed <th class='cell'>Thu <th class='cell'>Fri <th class='cell'>Sat</tr>");
-  for(var i=0;i<weeksinMonth.length;i++){
-    str=str.concat("<tr>");
-    var daysinWeek= weeksinMonth[i].getDates();
-    for(var j=0;j<7;j++){
-      var theDay= daysinWeek[j].getDate();
-      var theMonth= daysinWeek[j].getMonth();
-      if (theMonth == curMonth){
-        str=str.concat("<td class='cell'>".concat(theDay));
-      }
-      else{
-         str=str.concat("<td class='oldcell'>".concat(theDay));
-      }
-    }
-    str=str.concat("</tr>");
-  }
-  str=str.concat("</table>");
-  document.getElementById("cal").innerHTML = str;
-  document.getElementById("date").innerHTML = monthList[curMonth]+ ", " + curYear;
+  load(thisMonth);
 }
 
+function backMonth(){
+  var toMonth=globalMonth.mon.prevMonth();
+  load(toMonth);
+}
+ 
 function forwardMonth(){
   var toMonth=globalMonth.mon.nextMonth();
-  var curMonth = toMonth.month;
-  var curYear = toMonth.year;
-  globalMonth.mon=toMonth;
-  var weeksinMonth=toMonth.getWeeks();
-  var str="";
-  str=str.concat("<table align='center' border=1 cellpadding=2> <tr> <th class='cell'>Sun <th class='cell'>Mon <th class='cell'>Tue <th class='cell'>Wed <th class='cell'>Thu <th class='cell'>Fri <th class='cell'>Sat</tr>");
-  for(var i=0;i<weeksinMonth.length;i++){
-    str=str.concat("<tr>");
-    var daysinWeek= weeksinMonth[i].getDates();
-    for(var j=0;j<7;j++){
-      var theDay= daysinWeek[j].getDate();
-      var theMonth= daysinWeek[j].getMonth();
-      if (theMonth == curMonth){
-        str=str.concat("<td class='cell'>".concat(theDay));
-      }
-      else{
-         str=str.concat("<td class='oldcell'>".concat(theDay));
-      }
-    }
-    str=str.concat("</tr>");
-  }
-  str=str.concat("</table>");
-  document.getElementById("cal").innerHTML = str;
-  document.getElementById("date").innerHTML = monthList[curMonth] + ", " + curYear;
+  load(toMonth);
 }
+
 
 document.addEventListener("DOMContentLoaded", firstload, false);
 $("#next").click( forwardMonth);
