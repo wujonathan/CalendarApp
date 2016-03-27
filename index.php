@@ -73,7 +73,11 @@
       <div>
         <form id="newShare">
           <br> Please input the details for sharing your calendar: </br><br></br>
+<<<<<<< HEAD
             Share With <input class="text" name="shareWith" id="shareWith" placeholder="username1, username2, ..."><br><br></br>
+=======
+            Share With <input class="text" id="shareWith" placeholder="username1, username2, ..."><br><br></br>
+>>>>>>> fcfbd5d975831d26b16a091d3ec2b44bb2c1dfc1
           <input id="submitShare" type="button" name="submit" value="Share"/>
         </form>
         <div id="shareMsg"></div> 
@@ -363,25 +367,32 @@ $("#submitShare").click( function(){
      return;
  }
  var pdata = {
-   shareTo : shareTo,
+   shareTo : shareTo
  };
  $.ajax({type:'POST', url: 'sharecal_ajax.php', data: pdata, dataType: 
 'json', success: function(response) {
-   if(response.success){
-     $("#shareMsg").empty();
-     $("#shareMsg").append('<div class="successText">Calendar Shared!</div>');
-     setTimeout(function() {
+   var allSuccess = 1;
+   $("#shareMsg").empty();
+   for (i = 0; i < response.length; ++i)
+    {
+     var resp = response[i];
+     console.log(resp);
+     if(resp.success){
+        $("#shareMsg").append('<div class="successText">Calendar Shared with '+resp.user+'</div>'); 
+   }
+     else{
+        allSuccess = 0;
+        $("#shareMsg").append('<div class="failText">'+resp.message+' with '+resp.user+'</div>');
+      }
+     }
+  if (allSuccess){
+  setTimeout(function() {
      $(".shareDetails").fadeOut(300);
      $("#shareMsg").empty();
      $("#newShare")[0].reset();
-     },1000); 
-   }
-   else{
-     $("#shareMsg").empty();
-     $("#shareMsg").append('<div class="failText">'+response.message+'</div>');
-   }
- }
-})
+     },1000);
+  }
+}})
 });
 
 
