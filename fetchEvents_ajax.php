@@ -24,7 +24,7 @@ while($stmt->fetch()){
 $stmt->close();
 $events_array=array();
 for($i=0;$i<sizeof($users_array);$i++){
-	$stmt = $mysqli->prepare("SELECT title, description, time, FROM events WHERE user_id=? AND month=?");
+	$stmt = $mysqli->prepare("SELECT title, description, day time, FROM events WHERE user_id=? AND month=? ORDER BY day ASC");
 	if(!$stmt){
 		echo json_encode(array(
 			"success" => false,
