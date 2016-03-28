@@ -1,3 +1,4 @@
+/*globals $:false */
 var toMonth;
 var usrname;
 var globalMonth;
@@ -321,11 +322,12 @@ $("#submitNewEvent").click( function(){
  var time = $("#eventTime").val();
  var desc = $("#desc").val();
  var group = $("#invitees").val();
+ var tag;
  var tags=document.getElementsByName("tags");
  console.log(tags[0].value);
  for(var i=0; i<tags.length;i++){
   if(tags[i].checked){
-    var tag=tags[i].value;
+    tag=tags[i].value;
     break;
   }
 }
