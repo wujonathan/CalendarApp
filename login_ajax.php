@@ -1,5 +1,5 @@
 <?php
-
+/*Logs in a user after retrieveing post data from the ajax call. Notifies success or failure as json array*/
 header("Content-Type: application/json"); 
 require 'database.php';
 

@@ -1,4 +1,5 @@
 <?php
+/*Shares user's calendar with the usernames in 'shareTo' variable if they exist. Notifies sucess or fail message for each username.*/
 header("Content-Type: application/json");
 
 require 'database.php';

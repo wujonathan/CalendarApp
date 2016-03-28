@@ -1,4 +1,5 @@
 <?php
+/*Registers a new user in the database. If username already present, notifies failure. Encrypts the password using crypt.*/
 header("Content-Type: application/json");
 
 if(isset($_POST['newUsername'])&&isset($_POST['newPassword'])){

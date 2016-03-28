@@ -8,6 +8,7 @@ var something;
 var date;
 var token;
 
+/*function loads the calendar by adding table to the 'cal' object in the center of the page. If user is logged in, the fuction makes ajax request to the fetchEvent_ajax.php to get all events associated (created, shared with or invited) with the user and updates the calendar*/
 function load(){
   $("#cal").empty();
   var curMonth = toMonth.month;
@@ -45,6 +46,7 @@ var queryMonth = curYear+"-"+pre+newCurMonth.toString();
 var pdata = {
   queryMonth : queryMonth
 };
+/*Using jquery ajax call. filtering json data using inbuilt type:'json' method so that no parse in needed*/
 $.ajax({type:'POST', url: 'fetchEvents_ajax.php', data: pdata, dataType: 'json', success: function(response) { 
  for (var i = 0; i < response.length; ++i) 
  {
@@ -62,6 +64,7 @@ document.getElementById("cal").innerHTML = str;
 document.getElementById("date").innerHTML = monthList[curMonth] + ", " + curYear;
 }
 
+/*function loads the calendar with current month. Default on document load*/
 function firstload(){
   var curDate = new Date();
   var curMonth = curDate.getMonth();
@@ -71,11 +74,13 @@ function firstload(){
   $( document ).ready(load);
 }
 
+/*function loads the previous month. called by event handler when clicked 'Prev Month' button*/
 function backMonth(){
   toMonth=globalMonth.prevMonth();
   $( document ).ready(load);
 }
 
+/*function loads the next month. called by event handler when clicked 'Next Month' button*/
 function forwardMonth(){
   toMonth=globalMonth.nextMonth();
   $( document ).ready(load);
@@ -86,6 +91,7 @@ document.addEventListener("DOMContentLoaded", firstload, false);
 $("#next").click( forwardMonth);
 $("#prev").click( backMonth);
 
+/*Toggles value of "data-tog" from 1 to 0 and reverse. Used for example,When one clicks the button 'Log In' users can view the 'login info' section below the button. This function toggles the state of the button so that a next click on the 'Log In' button collapses the login info section*/
 function toggleState(item){
  if($(item).attr("data-tog") == "0") {
    $(item).attr("data-tog","1");
@@ -95,6 +101,7 @@ function toggleState(item){
  }
 }
 
+/*Loads the 'event info' section on the top left corner of the page when users click on individual self created events (green) in their calendar*/
 $(document).on('click', ".event", function(event){
   $("#eventInfoMsg").empty();
   something=this;
@@ -110,7 +117,7 @@ $(document).on('click', ".event", function(event){
   $(".eventDisplay").show();
 });
 
-
+/*Loads the 'event info' section on the top left corner of the page when users click on individual invited/shared events (blue) in their calendar*/
 $(document).on('click', ".invitedEvent", function(event){
   $("#eventInfoMsg").empty();
   something=this;
@@ -136,6 +143,7 @@ $("#alterEvent").click( function(){
   toggleState(this);
 });
 
+/*event handler for 'Log In' button. Opens up 'login info' section right below the button*/
 $("#login").click( function(){
  var neighbor = $("#createUser");
  if ($(neighbor).attr("data-tog") == "1"){
@@ -151,6 +159,7 @@ else{
 toggleState(this);
 });
 
+/*'Log Out' button event handler. Makes ajax call to 'logout_ajax.php'*/
 $("#logout").click( function(){
  $.ajax({type:'POST', url: 'logout_ajax.php', dataType: 'json', success: function(response) {
    if(response.success){
@@ -168,6 +177,7 @@ $("#logout").click( function(){
 });
 });
 
+/*event handler for 'Create User' button. Opens up 'new user info' section right below the button*/
 $("#createUser").click( function(){
  var neighbor = $("#login");
  if ($(neighbor).attr("data-tog") == "1"){
@@ -183,6 +193,7 @@ else{
 toggleState(this);
 });
 
+/*event handler for 'Share My Cal' button. Opens up 'sharee info' section right below the button*/
 $("#shareCalendar").click( function(){
  var neighbor = $("#createEvent");
  if ($(neighbor).attr("data-tog") == "1"){
@@ -198,6 +209,7 @@ else{
 toggleState(this);
 });
 
+/*event handlers for event's tag (radio) button*/
 $("#tagWork").click( function(){
   $(".event").hide();
   $(".invitedEvent").hide();
@@ -227,6 +239,7 @@ $("#tagDisable").click( function(){
   $(".invitedEvent").show();
 });
 
+/*event handler for 'Create Event' button. Opens up 'event info' section right below the button*/
 $("#createEvent").click( function(){
  var neighbor = $("#shareCalendar");
  if ($(neighbor).attr("data-tog") == "1"){
@@ -242,6 +255,7 @@ else{
 toggleState(this);
 });
 
+/*event handler for 'New User Info's submit' button. Makes ajax call if non-empty input fields is provided. If successful user creation, hides the notifies 'success' and hides 'New User Info' section. If failed, notifies 'fail' state*/ 
 $("#submitCreateUser").click( function(){
  var newusrname = $("#newUsername").val();
  var newusrpass = $("#newPassword").val();
@@ -274,6 +288,7 @@ $("#submitCreateUser").click( function(){
 });
 });
 
+/*event handler for  'Login Info's submit' button. Makes ajax call if non-empty input fields is provided. If successful user login, hides the notifies 'success' and hides 'Login Info' section. If failed, notifies 'fail' state*/ 
 $("#submitLogin").click( function(){
  usrname = $("#username").val();
  var usrpass = $("#password").val();
@@ -314,7 +329,7 @@ $("#submitLogin").click( function(){
 });
 });
 
-
+/*event handler for 'Event Info's submit' button. Makes ajax call if non-empty input fields is provided. If successful event creation, hides the notifies 'success' and hides 'Event Info' section. If failed, notifies 'fail' state*/ 
 $("#submitNewEvent").click( function(){
  var title = $("#eventTitle").val();
  var date = $("#eventDate").val();
@@ -364,6 +379,7 @@ $.ajax({type:'POST', url: 'addevent_ajax.php', data: pdata, dataType: 'json', su
 });
 });
 
+/*event handler for 'Delete Event' button. Makes ajax call to delete the event from the database*/
 $("#deleteEvent").click( function(){
   var eventID= $(something).attr("data-eventID");
 var pdata = {
@@ -388,6 +404,7 @@ var pdata = {
 });
 });
 
+/*event handler for 'Delete Event' button. Opens up 'Edit info' sectionand  makes ajax call to edit the event from the database*/
 $("#editEvent").click( function(){
   var eventID= $(something).attr("data-eventID");
   var title = $("#editTitle").val();
@@ -417,6 +434,7 @@ $("#editEvent").click( function(){
 });
 });
 
+/*event handler for 'Sharee Info's submit' button. Makes ajax call if non-empty input fields is provided. If successful calendar share, hides the notifies 'success' and hides 'Sharee Info' section. If failed, notifies 'fail' state*/ 
 $("#submitShare").click( function(){
  var shareTo = $("#shareWith").val();
  if (shareTo === ""){

@@ -1,0 +1,8 @@
+CREATE DATABASE calender;
+CREATE user 'module5'@'localhost' identified BY 'module5';
+GRANT all on calender.* to module5@'localhost' with GRANT OPTION;
+flush privileges;
+CREATE TABLE registered_users( id MEDIUMINT unsigned not null auto_increment, username VARCHAR(50) not null, password varchar(50) not null, primary key (id));
+CREATE TABLE events(id mediumint unsigned not null auto_increment,day tinyint unsigned not null, month tinyint unsigned not null, year tinyint unsigned not null, grouped  enum('yes','no') not null default 'no', userid mediumint unsigned not null, title VARCHAR(150) not null,description VARCHAR(150) not null, hour tinyint unsigned not null, minute tinyint unsigned not null, primary key(id), foreign key(userid) references registered_users(id));
+CREATE table shared_users(id mediumint unsigned not null auto_increment, user_id mediumint unsigned not null, sharer_id mediumint unsigned not null, primary key (id), foreign key(user_id) references registered_users(id));
+create table group_events(id mediumint unsigned not null auto_increment, event_id mediumint unsigned not null, user_id mediumint unsigned not null, primary key(id), foreign key(event_id) references events(id), foreign key (user_id) references registered_users(id));

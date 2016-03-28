@@ -1,5 +1,5 @@
 <?php
-
+/*Adds an event to the database after getting the post variables from the ajax request. Adds events to other group users if they exist*/
 header("Content-Type: application/json");
 require 'database.php';
 require 'user_agent_test.php';
@@ -39,6 +39,7 @@ $stmt->execute();
 $stmt->bind_result($event_id);
 $stmt->fetch();
 $stmt->close();
+//For group events i.e. other invited users
 $groups = explode(", ", $group);
 for($i=0; $i<sizeof($groups) ;$i++){
 	$curU=$groups[$i];				

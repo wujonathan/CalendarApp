@@ -1,5 +1,5 @@
 <?php
-
+/*Deletes an event from the database after getting the post vairable of event id from the ajax request*/
 header("Content-Type: application/json");
 require 'database.php';
 require 'user_agent_test.php';

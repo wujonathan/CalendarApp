@@ -1,5 +1,5 @@
 <?php
-
+/*edits the existing event with new non-empty fields*/
 header("Content-Type: application/json");
 require 'database.php';
 require 'user_agent_test.php';
@@ -9,7 +9,6 @@ $eventID=$mysqli->real_escape_string($_POST['eventID']);
 $user_id=$_SESSION['user_id'];
 $title=$mysqli->real_escape_string($_POST['title']);
 $description=$mysqli->real_escape_string($_POST['description']);
-echo($description);
 $time=$mysqli->real_escape_string($_POST['time']);
 
 $stmt = $mysqli->prepare("SELECT title, description, time FROM events WHERE id=?");

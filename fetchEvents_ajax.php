@@ -1,4 +1,5 @@
 <?php
+/*fetches user events to load the calendar. This includes personal events, shared calendar events to the user as well as invited events*/
 header("Content-Type: application/json");
 
 require 'database.php';
@@ -8,6 +9,7 @@ $queryMonth=$_POST["queryMonth"];
 
 $shared_id;
 $users_array=array($user_id);
+//find shared events
 $stmt = $mysqli->prepare("SELECT sharer_id FROM shared_users WHERE user_id=?");
 if(!$stmt){
 	echo json_encode(array(

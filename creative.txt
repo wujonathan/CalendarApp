@@ -1,0 +1,13 @@
+Jonathan Wu - 437406
+Manil Bastola - 438223
+http://ec2-52-24-193-191.us-west-2.compute.amazonaws.com/~mbastola/module5/group/
+
+For our creative portion we implemented user-assigned tags, calendar-sharing feature and group events.
+
+To clarify, Users can tag an event with a particular category (work, personal, or school) and enable/disable those tags (using radio buttons in 'create event' forms) in the calendar view (using 'view work', 'view personal' or 'view school' buttons on the calendar page once they log in).
+
+Users can share their calendar with additional multiple users by using 'Share my cal' button right below the main calendar display.When on clicks the 'Share My Cal' button, there is a text input that says 'Share with' which takes in multiple valid (existing in database) usernames separated by comma and shares calendar with those users. If the share is successful for all input users, the shared with users can see sharer's calendar events in their calendar in 'blue' (as opposed to  seeing their own events in 'green'). If share unsuccessful prints out the names of those unsucessful in 'red' text color. All users can see the 'host' of the event (one who created the event) in the event info shown next to the calendar when they click a particular event in their calendar.
+
+
+Users can create group events that display on multiple users calendars. This is an option that displays in 'Create event' form. When on clicks the 'Create Event' button, there is a text input that says 'Invite others' which takes in multiple valid (existing in database) usernames separated by comma and shares calendar with those users. If the invite is successful for all input users, the invited users can see sharer's calendar events in their calendar in 'blue' (as opposed to  seeing their own events in 'green').If invite unsuccessful prints out the names of those unsucessful in 'red' text color.  All users can see the 'owner' of the event (one whose calendar was shared with the user) in the event info shown next to the calendar when they click a particular event in their calendar.
+
