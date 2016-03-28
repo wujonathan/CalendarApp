@@ -13,9 +13,10 @@ $user_id=$_SESSION['user_id'];
 $title=$mysqli->real_escape_string($_POST['title']);
 $description=$mysqli->real_escape_string($_POST['description']);
 $time=$mysqli->real_escape_string($_POST['time']);
+$tag=$mysqli->real_escape_string($_POST['tag']);
 
 		//Inserts into database
-$stmt = $mysqli->prepare("INSERT INTO events (month, host, userid, title, description, time, day) VALUES (?, ?, ?, ?, ?, ?, ?)");
+$stmt = $mysqli->prepare("INSERT INTO events (month, host, userid, title, description, time, day, tag) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 if(!$stmt){
 	echo json_encode(array(
 		"success" => false,
@@ -23,7 +24,7 @@ if(!$stmt){
 		));
 	exit;
 }
-$stmt->bind_param('ssissss',$month, $host, $user_id, $title, $description, $time, $day);
+$stmt->bind_param('ssisssss',$month, $host, $user_id, $title, $description, $time, $day, $tag);
 $stmt->execute();
 $stmt->close();
 
@@ -54,7 +55,7 @@ for($i=0; $i<sizeof($groups) ;$i++){
 	$stmt->fetch();
 	$stmt->close();
 	if($curUser_id!=null){
-		$stmt = $mysqli->prepare("INSERT INTO events (month, host, userid, title, description, time, day) VALUES (?, ?, ?, ?, ?, ?, ?)");
+		$stmt = $mysqli->prepare("INSERT INTO events (month, host, userid, title, description, time, day, tag) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 		if(!$stmt){
 			echo json_encode(array(
 				"success" => false,
@@ -62,7 +63,7 @@ for($i=0; $i<sizeof($groups) ;$i++){
 				));
 			exit;
 		}
-		$stmt->bind_param('ssissss',$month, $host, $curUser_id, $title, $description, $time, $day);
+		$stmt->bind_param('ssissss',$month, $host, $curUser_id, $title, $description, $time, $day, $tag);
 		$stmt->execute();
 		$stmt->close();
 	}

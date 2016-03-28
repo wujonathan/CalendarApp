@@ -38,7 +38,7 @@ for($i=0;$i<sizeof($users_array);$i++){
         $stmt->fetch();
 	$stmt->close();
 	
-	$stmt = $mysqli->prepare("SELECT id, title, description, day, time, host FROM events WHERE userid=? AND month=? ORDER BY day ASC");
+	$stmt = $mysqli->prepare("SELECT id, title, description, day, time, host, tag FROM events WHERE userid=? AND month=? ORDER BY day ASC");
 	if(!$stmt){
 		echo json_encode(array(
 			"success" => false,
@@ -47,9 +47,9 @@ for($i=0;$i<sizeof($users_array);$i++){
 	}
 	$stmt->bind_param('ss', $users_array[$i], $queryMonth);
 	$stmt->execute();
-	$stmt->bind_result($eventID, $curTitle, $curDescription, $curDay, $curTime, $curHost);
+	$stmt->bind_result($eventID, $curTitle, $curDescription, $curDay, $curTime, $curHost, $eventTag);
 	while($stmt->fetch()){
-	         $status =  array("eventID" =>htmlspecialchars($eventID), "title" => htmlspecialchars($curTitle), "desc" => htmlspecialchars($curDescription), "time" => htmlspecialchars($curTime), "day" => htmlspecialchars($curDay), "host" => htmlspecialchars($curHost), "owner" => htmlspecialchars($ownerName) );		
+	         $status =  array("eventTag" => htmlspecialchars($eventTag), "eventID" =>htmlspecialchars($eventID), "title" => htmlspecialchars($curTitle), "desc" => htmlspecialchars($curDescription), "time" => htmlspecialchars($curTime), "day" => htmlspecialchars($curDay), "host" => htmlspecialchars($curHost), "owner" => htmlspecialchars($ownerName) );		
 		array_push($events_array, $status);
 	}
 	$stmt->close();

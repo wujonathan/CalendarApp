@@ -25,7 +25,7 @@ if($cnt == 1 && crypt($password, $pwd_hash)==$pwd_hash){
 	$_SESSION['user_id'] = $user_id;
 	$_SESSION['token'] = substr(md5(rand()), 0, 10);
 	echo json_encode(array(
-		"success" => true
+		"success" => true, "token" =>$_SESSION['token']
 		));
 	exit;
 }else{

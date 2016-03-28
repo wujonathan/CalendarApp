@@ -29,80 +29,94 @@
       <div id="loginUserMsg"></div> 
     </div>
 <!--     <input type="hidden" id="hdnSession" data-value="@Request.RequestContext.HttpContext.Session['token']" />
-+ --> 
-  </div>
-  <div class="userCreateDetails">
-    <div>
-      <form id="userCreate">
-        <br> Please Input the details for registering: <br>
-        Username <input type="text"  name="newUsername" id="newUsername">  <br>
-        Password <input type="password"  name="newPassword" id="newPassword">  <br>
-        <input id="submitCreateUser" type="button" name="submit" value="Create User"/>
-      </form>
-      <div id="userCreateMsg"></div> 
-    </div>
-  </div>
-  <div class="eventDisplay">
-    <div class="eventInfo" id="eventInfo">
-    </div>
-    <div class="eventModifier">
-      <button class="btns" id="deleteEvent" data-tog="0">Delete Event</button>
-      <button class="btns" id="alterEvent" data-tog="0">Alter Event</button>
-    </div>
-  </div>
-  <div class="editEvent">
-    <form id="eventAlter">
-
-      New Title<input type="text"  name="editTitle" id="editTitle">  <br>
-      New Time<input type="time"  name="eventTime" id="editTime"> <br>
-      New Description <br>
-      <textarea rows="4" cols="50" name="desc" id="editDesc" placeholder="Enter New Description Here.."></textarea>  <br>
-      <input id="editEvent" type="button" name="submit" value="Edit Event"/>
+  + --> 
+</div>
+<div class="userCreateDetails">
+  <div>
+    <form id="userCreate">
+      <br> Please Input the details for registering: <br>
+      Username <input type="text"  name="newUsername" id="newUsername">  <br>
+      Password <input type="password"  name="newPassword" id="newPassword">  <br>
+      <input id="submitCreateUser" type="button" name="submit" value="Create User"/>
     </form>
-    <div id="editEventMsg"></div>
+    <div id="userCreateMsg"></div> 
   </div>
-  <div class="eventInfoMsg">
+</div>
+<div class="eventDisplay">
+  <div class="eventInfo" id="eventInfo">
   </div>
-  <div class="layer1">
-    <div class="date" id="date">
+  <div class="eventModifier">
+    <button class="btns" id="deleteEvent" data-tog="0">Delete Event</button>
+    <button class="btns" id="alterEvent" data-tog="0">Alter Event</button>
+  </div>
+</div>
+<div class="editEvent">
+  <form id="eventAlter">
 
+    New Title<input type="text"  name="editTitle" id="editTitle">  <br>
+    New Time<input type="time"  name="eventTime" id="editTime"> <br>
+    New Description <br>
+    <textarea rows="4" cols="50" name="desc" id="editDesc" placeholder="Enter New Description Here.."></textarea>  <br>
+    <input id="editEvent" type="button" name="submit" value="Edit Event"/>
+  </form>
+  <div id="editEventMsg"></div>
+</div>
+<div class="eventInfoMsg">
+</div>
+<div class="layer1">
+  <div class="date" id="date">
+
+  </div>
+  <div class="calendar">
+    <div class="nexts">
+      <button class="btns" id="prev">Prev Month</button>
+      <button class="rbtns" id="next">Next Month</button>
     </div>
-    <div class="calendar">
-      <div class="nexts">
-        <button class="btns" id="prev">Prev Month</button>
-        <button class="rbtns" id="next">Next Month</button>
-      </div>
-      <div class="cal" id="cal" data-tog=""></div>
+    <div class="myTags">
+      <button class="btns" id="tagWork">View Work</button>
+      <button class="btns" id="tagSchool">View School</button>
+      <button class="btns" id="tagPersonal">View Personal</button>
     </div>
-    <div class="addEvents">
-      <button class="btns" id="createEvent" data-tog="0">Create Event</button>
-      <button class="btns" id="shareCalendar" data-tog="0">Share My Cal</button>
+    <div class="viewAll">
+      <button class="btns" id="tagDisable">View All</button>
     </div>
-    <div class="eventCreateDetails">
-      <div>
-        <form id="newEvent">
-          <br> Please Input the details of event (Required Feilds in *): <br>
-          Title* <input type="text"  name="eventTitle" id="eventTitle">  <br>
-          Day* <input type="date"  name="eventDate" id="eventDate"> <br>
-          Time* <input type="time"  name="eventTime" id="eventTime"> <br>
-          <textarea rows="4" cols="50" name="desc" id="desc" placeholder="Enter Description Here.."></textarea>  <br>
-          Invite others? <input class="text" id="invitees" placeholder="username1, username2, ..."><br><br>
-          <input id="submitNewEvent" type="button" name="submit" value="Create Event"/>
-        </form>
-        <div id="addEventMsg"></div> 
-      </div>
-    </div>
-    <div class="shareDetails">
-      <div>
-        <form id="newShare">
-          <br> Please input the details for sharing your calendar: <br>
-          Share With <input class="text" id="shareWith" placeholder="username1, username2, ..."><br><br>
-          <input id="submitShare" type="button" name="submit" value="Share"/>
-        </form>
-        <div id="shareMsg"></div> 
-      </div>
+    <div class="cal" id="cal" data-tog=""></div>
+  </div>
+  <div class="addEvents">
+    <button class="btns" id="createEvent" data-tog="0">Create Event</button>
+    <button class="btns" id="shareCalendar" data-tog="0">Share My Cal</button>
+  </div>
+  <div class="eventCreateDetails">
+    <div>
+      <form id="newEvent">
+        <br> Please Input the details of event (Required Feilds in *): <br>
+        Title* <input type="text"  name="eventTitle" id="eventTitle">  <br>
+        Day* <input type="date"  name="eventDate" id="eventDate"> <br>
+        Time* <input type="time"  name="eventTime" id="eventTime"> <br>
+        <textarea rows="4" cols="50" name="desc" id="desc" placeholder="Enter Description Here.."></textarea>  <br>
+        Invite others? <input class="text" id="invitees" placeholder="username1, username2, ..."><br><br>
+        Tag <br>
+        <div class="tags" id="tags">
+          <input type="radio" name="tags" value="work" id="work"> Work<br>
+          <input type="radio" name="tags" value="school" id="school"> School<br>
+          <input type="radio" name="tags" value="personal" id="personal"> Personal<br>
+        </div>
+        <input id="submitNewEvent" type="button" name="submit" value="Create Event"/>
+      </form>
+      <div id="addEventMsg"></div> 
     </div>
   </div>
+  <div class="shareDetails">
+    <div>
+      <form id="newShare">
+        <br> Please input the details for sharing your calendar: <br>
+        Share With <input class="text" id="shareWith" placeholder="username1, username2, ..."><br><br>
+        <input id="submitShare" type="button" name="submit" value="Share"/>
+      </form>
+      <div id="shareMsg"></div> 
+    </div>
+  </div>
+</div>
 </div>
 <script type="text/javascript">
 var toMonth;
@@ -112,8 +126,7 @@ var monthList = ["January", "February", "March", "April", "May", "June", "July",
 var evt;
 var something;
 var date;
-var time;
-//var token;
+var token;
 
 function load(){
   $("#cal").empty();
@@ -157,10 +170,10 @@ $.ajax({type:'POST', url: 'fetchEvents_ajax.php', data: pdata, dataType: 'json',
  {
    var resp = response[i];
    if (usrname == resp.host){
-    $("#"+resp.day).append('<li class="event" data-eventID="'+resp.eventID+'" data-time="'+resp.time+'" data-desc="'+resp.desc+'">'+resp.title+'</li>');
+    $("#"+resp.day).append('<li class="event '+resp.eventTag+'" data-eventID="'+resp.eventID+'" data-time="'+resp.time+'" data-desc="'+resp.desc+'">'+resp.title+'</li>');
   }
   else{
-   $("#"+resp.day).append('<li class="invitedEvent" data-eventID="'+resp.eventID+'" data-time="'+resp.time+'" data-host="'+resp.host+'" data-owner="'+resp.owner+'" data-desc="'+resp.desc+'">'+resp.title+'</li>');
+   $("#"+resp.day).append('<li class="invitedEvent '+resp.eventTag+'" data-eventID="'+resp.eventID+'" data-time="'+resp.time+'" data-host="'+resp.host+'" data-owner="'+resp.owner+'" data-desc="'+resp.desc+'">'+resp.title+'</li>');
  }
 }
 }});
@@ -205,7 +218,7 @@ function toggleState(item){
 $(document).on('click', ".event", function(event){
   $("#eventInfoMsg").empty();
   something=this;
-  var evt = $(this).parent().attr('id');
+  evt = $(this).parent().attr('id');
   date = $("#date").text();
   var time24 = $(this).attr("data-time").split(":");
   var hour24 = parseInt(time24[0]);
@@ -213,15 +226,15 @@ $(document).on('click', ".event", function(event){
   var amPm = hour24 > 11 ? "pm" : "am";
   var time = hour.toString() + ":" + time24[1] + amPm; 
   var str = "<div>Event Title: " +  $(this).text() + "<br> Scheduled for: " + evt.toString() + " " +date +"<br> Time: " + time + "<br> Description: " + $(this).attr("data-desc")+"</div>";    
- document.getElementById("eventInfo").innerHTML = str;
- $(".eventDisplay").show();
+  document.getElementById("eventInfo").innerHTML = str;
+  $(".eventDisplay").show();
 });
 
 
 $(document).on('click', ".invitedEvent", function(event){
   $("#eventInfoMsg").empty();
   something=this;
-  var evt = $(this).parent().attr('id');
+  evt = $(this).parent().attr('id');
   date = $("#date").text();
   var time24 = $(this).attr("data-time").split(":");
   var hour24 = parseInt(time24[0]);
@@ -229,8 +242,8 @@ $(document).on('click', ".invitedEvent", function(event){
   var amPm = hour24 > 11 ? "pm" : "am";
   var time = hour.toString() + ":" + time24[1] + amPm;   
   var str = "<div>" + $(this).attr("data-owner") + "'s calendar.<br> Event Title: " +  $(this).text() + "<br> Scheduled for: " + evt.toString() + " " +date +"<br> Time: " + time + "<br> Description: " + $(this).attr("data-desc")  + "<br> Event Host: " +  $(this).attr("data-host")+"</div>";
- document.getElementById("eventInfo").innerHTML = str;
- $(".eventDisplay").show();
+  document.getElementById("eventInfo").innerHTML = str;
+  $(".eventDisplay").show();
 });
 
 $("#alterEvent").click( function(){
@@ -261,16 +274,18 @@ toggleState(this);
 $("#logout").click( function(){
  $.ajax({type:'POST', url: 'logout_ajax.php', dataType: 'json', success: function(response) {
    if(response.success){
-     $(".logouts").delay(1000).hide();
-     $(".logins").delay(1000).show();
-     $(".addEvents").delay(1000).hide();
-     $(".eventDisplay").delay(1000).hide();
-     $(".editEvent").delay(1000).hide();
-     $("#loggedUser").empty();
-     $("#loggedUser").attr("data-tog","0");
-     firstload();
-   }}
- });
+    $(".myTags").hide();
+    $(".viewAll").hide();
+    $(".logouts").delay(1000).hide();
+    $(".logins").delay(1000).show();
+    $(".addEvents").delay(1000).hide();
+    $(".eventDisplay").delay(1000).hide();
+    $(".editEvent").delay(1000).hide();
+    $("#loggedUser").empty();
+    $("#loggedUser").attr("data-tog","0");
+    firstload();
+  }}
+});
 });
 
 $("#createUser").click( function(){
@@ -301,6 +316,35 @@ else{
   $(".shareDetails").hide();
 }
 toggleState(this);
+});
+
+$("#tagWork").click( function(){
+  $(".event").hide();
+  $(".invitedEvent").hide();
+  $(".work").show();
+  $(".school").hide();
+  $(".personal").hide();
+});
+
+$("#tagSchool").click( function(){
+  $(".event").hide();
+  $(".invitedEvent").hide();
+  $(".work").hide();
+  $(".school").show();
+  $(".personal").hide();
+});
+
+$("#tagPersonal").click( function(){
+  $(".event").hide();
+  $(".invitedEvent").hide();
+  $(".work").hide();
+  $(".school").hide();
+  $(".personal").show();
+});
+
+$("#tagDisable").click( function(){
+  $(".event").show();
+  $(".invitedEvent").show();
 });
 
 $("#createEvent").click( function(){
@@ -364,6 +408,7 @@ $("#submitLogin").click( function(){
  }
  $.ajax({type:'POST', url: 'login_ajax.php', data: pdata, dataType: 'json', success: function(response) {
    if(response.success){ 
+    token=response.token;
      $("#loginUserMsg").empty();
      $("#loginUserMsg").append('<div class="successText">Login Success!!</div>');
      $("#loggedUser").attr("data-tog","1");
@@ -372,15 +417,14 @@ $("#submitLogin").click( function(){
        $(".logins").hide();
        $(".logouts").show();
        $(".addEvents").show();
+       $(".myTags").show();
+       $(".viewAll").show();
        $("#loginUserMsg").empty();
        $("#userlogin")[0].reset();
        $("#loggedUser").append('<div>Hello '+usrname+'!</div>');
      },1000); 
      toggleState($("#login"));
      firstload();
-//     var sessToken = "<?php echo $_SESSION['token'];?>";
-  //   console.log(sessToken);
-    // $("#hdnSession").attr("data-value",sessToken);
    }
    else{
      $("#loginUserMsg").empty();
@@ -398,44 +442,52 @@ $("#submitNewEvent").click( function(){
  var time = $("#eventTime").val();
  var desc = $("#desc").val();
  var group = $("#invitees").val();
- if (title === "" || date === "" || time === ""){
+ var tags=document.getElementsByName("tags");
+ console.log(tags[0].value);
+ for(var i=0; i<tags.length;i++){
+  if(tags[i].checked){
+    var tag=tags[i].value;
+    break;
+  }
+}
+if (title === "" || date === "" || time === ""){
+ $("#addEventMsg").empty();
+ $("#addEventMsg").append('<div class="failText">One or More Required Field is Missing</div>');
+ return;
+}
+var pdata = {
+ title : title,
+ date : date,
+ time : time,
+ description : desc,
+ groups : group,
+ tag: tag
+};
+$.ajax({type:'POST', url: 'addevent_ajax.php', data: pdata, dataType: 'json', success: function(response) {
+ if(response.success){ 
    $("#addEventMsg").empty();
-   $("#addEventMsg").append('<div class="failText">One or More Required Field is Missing</div>');
-   return;
- }
- var pdata = {
-   title : title,
-   date : date,
-   time : time,
-   description : desc,
-   groups : group,
- };
- $.ajax({type:'POST', url: 'addevent_ajax.php', data: pdata, dataType: 'json', success: function(response) {
-   if(response.success){ 
+   $("#addEventMsg").append('<div class="successText">Event Created!</div>');
+   setTimeout(function() {
+     $(".eventCreateDetails").fadeOut(300);
      $("#addEventMsg").empty();
-     $("#addEventMsg").append('<div class="successText">Event Created!</div>');
-     setTimeout(function() {
-       $(".eventCreateDetails").fadeOut(300);
-       $("#addEventMsg").empty();
-       $("#newEvent")[0].reset();
-     },1000); 
-     toggleState($("#createEvent"));
-     load();
-   }
-   else{
-     $("#addEventMsg").empty();
-     $("#addEventMsg").append('<div class="failText">'+response.message+'</div>');
-   }
+     $("#newEvent")[0].reset();
+   },1000); 
+   toggleState($("#createEvent"));
+   load();
  }
+ else{
+   $("#addEventMsg").empty();
+   $("#addEventMsg").append('<div class="failText">'+response.message+'</div>');
+ }
+}
 });
 });
 
 $("#deleteEvent").click( function(){
   var eventID= $(something).attr("data-eventID");
-//  var token= $("#hdnSession").attr("data-value");
-  var pdata = {
-   eventID : eventID
-   //token : token
+var pdata = {
+ eventID : eventID,
+   token : token
  };
  $.ajax({type:'POST', url: 'deleteEvent_ajax.php', data: pdata, dataType: 'json', success: function(response) {
    if(response.success){ 
@@ -464,7 +516,8 @@ $("#editEvent").click( function(){
    eventID : eventID,
    title : title,
    time : time,
-   description : desc
+   description : desc,
+   token : token
  };
  $.ajax({type:'POST', url: 'editEvent_ajax.php', data: pdata, dataType: 'json', success: function(response) {
    if(response.success){ 
@@ -472,8 +525,7 @@ $("#editEvent").click( function(){
      $("#eventInfoMsg").append('<div class="successText">Event Edited!</div>');
      $(".eventDisplay").hide();
      $(".editEvent").hide();
-     toggleState($(".eventDisplay"));
-     toggleState($(".editEvent"));
+     $("#eventAlter")[0].reset();
      load();
    }
    else{
