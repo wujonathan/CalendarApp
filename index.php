@@ -380,7 +380,7 @@ $("#submitLogin").click( function(){
      firstload();
 //     var sessToken = "<?php echo $_SESSION['token'];?>";
   //   console.log(sessToken);
-     $("#hdnSession").attr("data-value",sessToken);
+    // $("#hdnSession").attr("data-value",sessToken);
    }
    else{
      $("#loginUserMsg").empty();
