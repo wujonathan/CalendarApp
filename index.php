@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <title>Calendar</title>
   <link rel="stylesheet" type="text/css" href="style.css">
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js" type="text/javascript"></script>
@@ -29,7 +29,8 @@
       <div id="loginUserMsg"></div> 
     </div>
 <!--     <input type="hidden" id="hdnSession" data-value="@Request.RequestContext.HttpContext.Session['token']" />
- -->  </div>
++ --> 
+  </div>
   <div class="userCreateDetails">
     <div>
       <form id="userCreate">
@@ -152,14 +153,14 @@ var pdata = {
   queryMonth : queryMonth
 };
 $.ajax({type:'POST', url: 'fetchEvents_ajax.php', data: pdata, dataType: 'json', success: function(response) { 
- for (i = 0; i < response.length; ++i) 
+ for (var i = 0; i < response.length; ++i) 
  {
    var resp = response[i];
    if (usrname == resp.host){
-    $("#"+resp.day).append('<li class="event" eventID="'+resp.eventID+'"time="'+resp.time+'" desc="'+resp.desc+'">'+resp.title+'</li>');
+    $("#"+resp.day).append('<li class="event" data-eventID="'+resp.eventID+'" data-time="'+resp.time+'" data-desc="'+resp.desc+'">'+resp.title+'</li>');
   }
   else{
-   $("#"+resp.day).append('<li class="invitedEvent" eventID="'+resp.eventID+'"time="'+resp.time+'" host="'+resp.host+'" owner="'+resp.owner+'" desc="'+resp.desc+'">'+resp.title+'</li>');
+   $("#"+resp.day).append('<li class="invitedEvent" data-eventID="'+resp.eventID+'" data-time="'+resp.time+'" data-host="'+resp.host+'" data-owner="'+resp.owner+'" data-desc="'+resp.desc+'">'+resp.title+'</li>');
  }
 }
 }});
@@ -204,14 +205,14 @@ function toggleState(item){
 $(document).on('click', ".event", function(event){
   $("#eventInfoMsg").empty();
   something=this;
-  evt = $(this).parent().attr('id');
+  var evt = $(this).parent().attr('id');
   date = $("#date").text();
-  time24 = $(this).attr("time").split(":");
-  hour24 = parseInt(time24[0]);
-  hour = ((hour24 + 11) % 12) + 1;
-  amPm = hour24 > 11 ? "pm" : "am";
-  time = hour.toString() + ":" + time24[1] + amPm; 
-  var str = "<div>Event Title: " +  $(this).text() + "<br> Scheduled for: " + evt.toString() + " " +date +"<br> Time: " + time + "<br> Description: " + $(this).attr("desc")+"</div>";    
+  var time24 = $(this).attr("data-time").split(":");
+  var hour24 = parseInt(time24[0]);
+  var hour = ((hour24 + 11) % 12) + 1;
+  var amPm = hour24 > 11 ? "pm" : "am";
+  var time = hour.toString() + ":" + time24[1] + amPm; 
+  var str = "<div>Event Title: " +  $(this).text() + "<br> Scheduled for: " + evt.toString() + " " +date +"<br> Time: " + time + "<br> Description: " + $(this).attr("data-desc")+"</div>";    
  document.getElementById("eventInfo").innerHTML = str;
  $(".eventDisplay").show();
 });
@@ -220,14 +221,14 @@ $(document).on('click', ".event", function(event){
 $(document).on('click', ".invitedEvent", function(event){
   $("#eventInfoMsg").empty();
   something=this;
-  evt = $(this).parent().attr('id');
+  var evt = $(this).parent().attr('id');
   date = $("#date").text();
-  time24 = $(this).attr("time").split(":");
-  hour24 = parseInt(time24[0]);
-  hour = ((hour24 + 11) % 12) + 1;
-  amPm = hour24 > 11 ? "pm" : "am";
-  time = hour.toString() + ":" + time24[1] + amPm;   
-  var str = "<div>" + $(this).attr("owner") + "'s calendar.<br> Event Title: " +  $(this).text() + "<br> Scheduled for: " + evt.toString() + " " +date +"<br> Time: " + time + "<br> Description: " + $(this).attr("desc")  + "<br> Event Host: " +  $(this).attr("host")+"</div>";
+  var time24 = $(this).attr("data-time").split(":");
+  var hour24 = parseInt(time24[0]);
+  var hour = ((hour24 + 11) % 12) + 1;
+  var amPm = hour24 > 11 ? "pm" : "am";
+  var time = hour.toString() + ":" + time24[1] + amPm;   
+  var str = "<div>" + $(this).attr("data-owner") + "'s calendar.<br> Event Title: " +  $(this).text() + "<br> Scheduled for: " + evt.toString() + " " +date +"<br> Time: " + time + "<br> Description: " + $(this).attr("data-desc")  + "<br> Event Host: " +  $(this).attr("data-host")+"</div>";
  document.getElementById("eventInfo").innerHTML = str;
  $(".eventDisplay").show();
 });
@@ -377,6 +378,9 @@ $("#submitLogin").click( function(){
      },1000); 
      toggleState($("#login"));
      firstload();
+//     var sessToken = "<?php echo $_SESSION['token'];?>";
+  //   console.log(sessToken);
+     $("#hdnSession").attr("data-value",sessToken);
    }
    else{
      $("#loginUserMsg").empty();
@@ -390,6 +394,7 @@ $("#submitLogin").click( function(){
 $("#submitNewEvent").click( function(){
  var title = $("#eventTitle").val();
  var date = $("#eventDate").val();
+ console.log(date);
  var time = $("#eventTime").val();
  var desc = $("#desc").val();
  var group = $("#invitees").val();
@@ -426,11 +431,11 @@ $("#submitNewEvent").click( function(){
 });
 
 $("#deleteEvent").click( function(){
-  var eventID= $(something).attr("eventID");
-  //var token= $("#hdnSession").data('value');
+  var eventID= $(something).attr("data-eventID");
+//  var token= $("#hdnSession").attr("data-value");
   var pdata = {
-   eventID : eventID,
-  // token : token
+   eventID : eventID
+   //token : token
  };
  $.ajax({type:'POST', url: 'deleteEvent_ajax.php', data: pdata, dataType: 'json', success: function(response) {
    if(response.success){ 
@@ -451,7 +456,7 @@ $("#deleteEvent").click( function(){
 });
 
 $("#editEvent").click( function(){
-  var eventID= $(something).attr("eventID");
+  var eventID= $(something).attr("data-eventID");
   var title = $("#editTitle").val();
   var time = $("#editTime").val();
   var desc = $("#editDesc").val();
@@ -493,7 +498,7 @@ $("#submitShare").click( function(){
   'json', success: function(response) {
    var allSuccess = 1;
    $("#shareMsg").empty();
-   for (i = 0; i < response.length; ++i)
+   for (var i = 0; i < response.length; ++i)
    {
      var resp = response[i];
      if(resp.success){
