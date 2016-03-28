@@ -28,8 +28,8 @@
       </form>
       <div id="loginUserMsg"></div> 
     </div>
-    <input type="hidden" id="hdnSession" data-value="@Request.RequestContext.HttpContext.Session['token']" />
-  </div>
+<!--     <input type="hidden" id="hdnSession" data-value="@Request.RequestContext.HttpContext.Session['token']" />
+ -->  </div>
   <div class="userCreateDetails">
     <div>
       <form id="userCreate">
@@ -112,7 +112,7 @@ var evt;
 var something;
 var date;
 var time;
-var token;
+//var token;
 
 function load(){
   $("#cal").empty();
@@ -427,10 +427,10 @@ $("#submitNewEvent").click( function(){
 
 $("#deleteEvent").click( function(){
   var eventID= $(something).attr("eventID");
-  var token= $("#hdnSession").data('value');
+  //var token= $("#hdnSession").data('value');
   var pdata = {
    eventID : eventID,
-   token : token
+  // token : token
  };
  $.ajax({type:'POST', url: 'deleteEvent_ajax.php', data: pdata, dataType: 'json', success: function(response) {
    if(response.success){ 

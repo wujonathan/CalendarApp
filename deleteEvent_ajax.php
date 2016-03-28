@@ -3,7 +3,7 @@
 header("Content-Type: application/json");
 require 'database.php';
 require 'user_agent_test.php';
-require 'csrf_detector.php';
+//require 'csrf_detector.php';
 
 $eventID=$mysqli->real_escape_string($_POST['eventID']);
 
